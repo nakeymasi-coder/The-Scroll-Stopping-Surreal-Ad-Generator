@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Scroll Stopping Surreal Ad Generator</title>
+<style>
+:root{
+  --bg:#05070d;
+  --bg2:#0a1020;
+  --panel:rgba(10,16,32,.82);
+  --panel2:rgba(12,18,36,.92);
+  --text:#f7f8fb;
+  --muted:#d7dff0;
+  --line:rgba(212,175,55,.28);
+  --pink:#1d4ed8;
+  --pink2:#d4af37;
+  --shadow:0 20px 55px rgba(0,0,0,.45);
+  --shadow2:0 12px 32px rgba(0,0,0,.32);
+  --r:24px;
+  --royal:#1d4ed8;
+  --royal-deep:#0f2f8f;
+  --gold:#d4af37;
+  --gold-soft:#f3db86;
+  --black:#05070d;
+  --white:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(29,78,216,.18), transparent 24%),
+    radial-gradient(circle at 85% 18%, rgba(212,175,55,.16), transparent 24%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,.05), transparent 30%),
+    linear-gradient(180deg,#04060b 0%,#07101f 38%,#05070d 100%);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
+  z-index:0;
+  background:
+    conic-gradient(from 0deg at 50% 50%, rgba(29,78,216,.10), rgba(212,175,55,.08), rgba(255,255,255,.04), rgba(29,78,216,.10));
+  filter:blur(55px);
+  animation:spinGlow 30s linear infinite;
+  opacity:.78;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:38px 38px;
+  mask-image:radial-gradient(circle at center, black 42%, transparent 90%);
+  opacity:.18;
+  animation:gridShift 16s linear infinite;
+}
+@keyframes spinGlow{
+  0%{transform:rotate(0deg) scale(1)}
+  50%{transform:rotate(180deg) scale(1.05)}
+  100%{transform:rotate(360deg) scale(1)}
+}
+@keyframes gridShift{
+  0%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(18px,12px,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+.floating-blur,.floating-blur:before,.floating-blur:after{
+  position:fixed;border-radius:999px;pointer-events:none;filter:blur(44px);opacity:.48;z-index:0;content:"";
+}
+.floating-blur{
+  width:320px;height:320px;top:18px;right:4%;
+  background:radial-gradient(circle,rgba(29,78,216,.34),rgba(29,78,216,0));
+  animation:a 16s ease-in-out infinite
+}
+.floating-blur:before{
+  width:260px;height:260px;left:-560px;top:420px;
+  background:radial-gradient(circle,rgba(212,175,55,.26),rgba(212,175,55,0));
+  animation:b 18s ease-in-out infinite
+}
+.floating-blur:after{
+  width:220px;height:220px;left:-300px;top:130px;
+  background:radial-gradient(circle,rgba(255,255,255,.15),rgba(255,255,255,0));
+  animation:c 14s ease-in-out infinite
+}
+.orbital-stars{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+}
+.orbital-stars span{
+  position:absolute;
+  display:block;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:rgba(255,255,255,.85);
+  box-shadow:0 0 10px rgba(255,255,255,.55), 0 0 22px rgba(212,175,55,.28);
+  animation:floatStar linear infinite;
+}
+.orbital-stars span:nth-child(1){left:8%;top:14%;animation-duration:14s;animation-delay:-2s}
+.orbital-stars span:nth-child(2){left:18%;top:62%;animation-duration:18s;animation-delay:-8s}
+.orbital-stars span:nth-child(3){left:28%;top:28%;animation-duration:22s;animation-delay:-11s}
+.orbital-stars span:nth-child(4){left:42%;top:74%;animation-duration:16s;animation-delay:-5s}
+.orbital-stars span:nth-child(5){left:56%;top:18%;animation-duration:19s;animation-delay:-12s}
+.orbital-stars span:nth-child(6){left:66%;top:58%;animation-duration:24s;animation-delay:-9s}
+.orbital-stars span:nth-child(7){left:78%;top:30%;animation-duration:17s;animation-delay:-4s}
+.orbital-stars span:nth-child(8){left:88%;top:70%;animation-duration:21s;animation-delay:-10s}
+.orbital-stars span:nth-child(9){left:72%;top:10%;animation-duration:15s;animation-delay:-6s}
+.orbital-stars span:nth-child(10){left:10%;top:82%;animation-duration:20s;animation-delay:-13s}
+@keyframes floatStar{
+  0%{transform:translate3d(0,0,0) scale(.8);opacity:.2}
+  25%{opacity:.9}
+  50%{transform:translate3d(24px,-18px,0) scale(1.15);opacity:1}
+  75%{opacity:.8}
+  100%{transform:translate3d(-12px,22px,0) scale(.9);opacity:.25}
+}
+@keyframes a{0%,100%{transform:translate(0,0)}50%{transform:translate(-18px,24px)}}
+@keyframes b{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-18px)}}
+@keyframes c{0%,100%{transform:translate(0,0)}50%{transform:translate(12px,18px)}}
+.app{position:relative;z-index:1;width:min(1540px,calc(100% - 20px));margin:12px auto 24px;display:grid;gap:16px}
+.panel{background:linear-gradient(180deg,rgba(11,18,35,.88),rgba(8,13,26,.9));border:1px solid rgba(212,175,55,.22);backdrop-filter:blur(18px);box-shadow:var(--shadow);border-radius:var(--r)}
+.card{padding:18px;background:linear-gradient(180deg,rgba(12,20,38,.96),rgba(8,14,28,.96));border:1px solid rgba(212,175,55,.2);border-radius:22px;box-shadow:var(--shadow2);min-width:0}
+.title-panel{padding:22px 24px;text-align:center;background:linear-gradient(180deg,rgba(10,18,37,.92),rgba(8,13,25,.92));position:relative;overflow:hidden}
+.title-panel::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg, transparent, rgba(212,175,55,.08), transparent);animation:titleSweep 6s linear infinite;pointer-events:none}
+@keyframes titleSweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.title-panel h1{margin:0;font-size:clamp(2rem,3vw,3rem);letter-spacing:-.05em;line-height:1.02;color:var(--white);text-shadow:0 0 22px rgba(29,78,216,.2), 0 0 18px rgba(212,175,55,.12)}
+.group-title{font-size:.84rem;letter-spacing:.08em;text-transform:uppercase;font-weight:900;color:var(--gold-soft);margin:0 0 12px}
+.helper{color:var(--muted);font-size:.92rem;line-height:1.6;margin:0}
+button{font:inherit}
+.primary,.secondary,.ghost,.pill,.tiny,.tab-btn,.lock-btn,.rand-btn,.jump-btn,.preset-btn,.custom-toggle-btn{border:none;border-radius:16px;padding:12px 14px;font-weight:800;cursor:pointer;transition:.2s ease}
+.primary{color:#fff;background:linear-gradient(135deg,var(--royal),var(--royal-deep));box-shadow:0 14px 30px rgba(29,78,216,.28), inset 0 0 0 1px rgba(255,255,255,.08)}
+.secondary{color:#fff;background:linear-gradient(135deg,#1a2f73,#0f1b3b);box-shadow:0 10px 22px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.05)}
+.ghost,.pill,.tiny,.tab-btn,.lock-btn,.rand-btn,.jump-btn,.preset-btn,.custom-toggle-btn{background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.22);color:var(--text)}
+.pill,.tiny,.tab-btn,.lock-btn,.rand-btn,.jump-btn,.preset-btn,.custom-toggle-btn{padding:9px 11px;border-radius:14px}
+.primary:hover,.secondary:hover,.ghost:hover,.pill:hover,.tiny:hover,.tab-btn:hover,.lock-btn:hover,.rand-btn:hover,.jump-btn:hover,.preset-btn:hover,.custom-toggle-btn:hover{transform:translateY(-1px);box-shadow:0 16px 26px rgba(0,0,0,.26)}
+.primary,.secondary,.pill{position:relative;overflow:hidden}
+.primary::before,.secondary::before,.pill::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(120deg,rgba(255,255,255,.0),rgba(255,255,255,.16),rgba(255,255,255,0));transform:translateX(-120%);animation:buttonSweep 5.8s linear infinite;pointer-events:none}
+.primary{box-shadow:0 0 0 1px rgba(255,255,255,.07),0 0 18px rgba(29,78,216,.28),0 0 34px rgba(212,175,55,.12),0 14px 30px rgba(29,78,216,.28), inset 0 0 0 1px rgba(255,255,255,.08)}
+.secondary{box-shadow:0 0 0 1px rgba(255,255,255,.04),0 0 16px rgba(29,78,216,.18),0 10px 22px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.05)}
+.pill{box-shadow:0 0 0 1px rgba(255,255,255,.03),0 0 14px rgba(212,175,55,.12)}
+@keyframes buttonSweep{0%{transform:translateX(-120%)}100%{transform:translateX(140%)}}
+.typography-effects-wrap{display:grid;gap:10px}
+.typography-effects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.effect-chip{padding:10px 12px;border-radius:14px;border:1px solid rgba(212,175,55,.22);background:rgba(255,255,255,.04);color:var(--text);font-weight:800;cursor:pointer;transition:.2s ease;text-align:center}
+.effect-chip:hover{transform:translateY(-1px);border-color:rgba(212,175,55,.48)}
+.effect-chip.active{background:linear-gradient(135deg,rgba(29,78,216,.22),rgba(212,175,55,.16));border-color:rgba(212,175,55,.56);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.effect-help{font-size:.82rem;color:var(--muted);line-height:1.45}
+.hidden-input{display:none !important}
+.topbar{position:sticky;top:10px;z-index:10;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:14px;border:1px solid rgba(212,175,55,.24);border-radius:18px;background:linear-gradient(180deg,rgba(12,19,37,.95),rgba(9,14,28,.9));backdrop-filter:blur(10px);box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.topbar-actions,.jump-row,.switch-wrap,.field-tools,.section-head,.sub-actions,.preset-row,.variation-tabs{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.section-head{justify-content:space-between}
+.quick-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.concept-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.concept-card{width:100%;text-align:left;padding:14px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(212,175,55,.18);cursor:pointer;transition:.2s ease}
+.concept-card strong{display:block;font-size:.95rem;margin-bottom:5px;color:var(--white)}
+.concept-card small{display:block;color:var(--muted);line-height:1.4}
+.concept-card.active,.concept-card:hover{border-color:rgba(212,175,55,.48);background:linear-gradient(135deg,rgba(29,78,216,.18),rgba(212,175,55,.10));box-shadow:0 10px 20px rgba(0,0,0,.22);transform:translateY(-1px)}
+.preset-shell{overflow:auto;padding-bottom:4px}
+.preset-row{flex-wrap:nowrap;width:max-content}
+.preset-btn.active-preset{background:linear-gradient(135deg,rgba(29,78,216,.24),rgba(212,175,55,.18));border-color:rgba(212,175,55,.48);color:var(--white);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.form-grid{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.detail-grid{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.advanced-grid{display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.transport-grid{display:grid;gap:16px;grid-template-columns:repeat(5,minmax(0,1fr))}
+.output-panels{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.section-card{padding:20px}
+.field{min-width:0}
+.field-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+label{display:block;margin:0;font-size:.88rem;font-weight:800;color:var(--white)}
+input,select,textarea{width:100%;border:1px solid rgba(212,175,55,.22);border-radius:16px;padding:13px 14px;font:inherit;color:var(--white);background:rgba(255,255,255,.04);outline:none;transition:.2s ease;min-width:0}
+select option{background:#0b1120;color:#fff}
+textarea{min-height:112px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:rgba(212,175,55,.62);box-shadow:0 0 0 4px rgba(29,78,216,.16)}
+.lock-btn.locked{background:linear-gradient(135deg,rgba(212,175,55,.16),rgba(29,78,216,.12));color:var(--gold-soft);border-color:rgba(212,175,55,.5);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.lock-btn,.rand-btn{font-size:.74rem;font-weight:900;letter-spacing:.02em}
+.switch{position:relative;width:58px;height:32px;background:rgba(255,255,255,.08);border-radius:999px;cursor:pointer;border:1px solid rgba(212,175,55,.22);flex:0 0 auto}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 5px 12px rgba(0,0,0,.22);transition:.2s ease}
+.switch.active{background:linear-gradient(135deg,var(--royal),var(--gold));border-color:rgba(212,175,55,.5)}
+.switch.active:after{transform:translateX(26px)}
+.character-wrap{display:grid;gap:14px;padding:16px;border-radius:18px;background:linear-gradient(180deg,rgba(10,17,34,.75),rgba(7,12,24,.92));border:1px solid rgba(212,175,55,.18)}
+.gender-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.gender-card{padding:14px;border-radius:18px;border:1px solid rgba(212,175,55,.18);background:rgba(255,255,255,.03)}
+.gender-card.disabled{opacity:.42;pointer-events:none;filter:saturate(.7)}
+.custom-text-wrap{margin-top:10px;display:grid;gap:10px}
+.custom-text-area{min-height:78px}
+.custom-text-wrap.hidden{display:none!important}
+.custom-toggle-btn.active-custom{background:linear-gradient(135deg,rgba(29,78,216,.22),rgba(212,175,55,.14));border-color:rgba(212,175,55,.5);color:#fff}
+.outbox{min-height:340px;padding:18px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(212,175,55,.2);white-space:pre-wrap;line-height:1.7;color:#eef2ff;font-size:.96rem}
+.empty{color:#c9d3ea;font-style:italic}
+.variation-tabs{overflow:auto;padding-bottom:4px}
+.tab-btn.active{color:#fff;border-color:rgba(212,175,55,.55);background:linear-gradient(135deg,rgba(29,78,216,.22),rgba(212,175,55,.14));box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.variation-note{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.18);color:var(--muted);font-size:.83rem;line-height:1.5;margin-bottom:12px}
+.history-list{display:grid;gap:12px;max-height:420px;overflow:auto}
+.history-item{width:100%;padding:14px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.18);text-align:left;cursor:pointer}
+.history-item strong{display:block;margin-bottom:6px;font-size:.86rem;color:var(--gold-soft)}
+.status{min-height:20px;color:var(--gold-soft);font-weight:800;font-size:.86rem}
+.hidden{display:none!important}
+footer{padding:6px 10px 20px;color:#c9d3ea;text-align:center;font-size:.82rem}
+@media (max-width:1360px){.transport-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1280px){.concept-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.advanced-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1080px){.quick-grid,.output-panels,.gender-panels{grid-template-columns:1fr}.advanced-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.transport-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){.form-grid,.detail-grid,.advanced-grid,.concept-grid,.transport-grid{grid-template-columns:1fr}.title-panel,.section-card,.card{padding:16px}}
+@media (max-width:680px){.app{width:min(100% - 12px,100%);margin:10px auto 18px;gap:12px}.panel,.card{border-radius:18px}.topbar-actions button,.jump-row button,.sub-actions button{width:100%}.outbox{min-height:280px}}
+
+.lux-bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+}
+.lux-bg .aurora{
+  position:absolute;
+  inset:auto;
+  width:72vw;
+  height:72vw;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:.22;
+  mix-blend-mode:screen;
+  animation:auroraDrift 20s ease-in-out infinite;
+}
+.lux-bg .aurora.a1{
+  top:-16vw;
+  left:-10vw;
+  background:radial-gradient(circle, rgba(29,78,216,.55) 0%, rgba(29,78,216,.22) 28%, rgba(29,78,216,0) 68%);
+}
+.lux-bg .aurora.a2{
+  top:18vh;
+  right:-14vw;
+  background:radial-gradient(circle, rgba(212,175,55,.42) 0%, rgba(212,175,55,.16) 30%, rgba(212,175,55,0) 70%);
+  animation-duration:24s;
+}
+.lux-bg .aurora.a3{
+  bottom:-22vw;
+  left:18vw;
+  width:56vw;
+  height:56vw;
+  background:radial-gradient(circle, rgba(255,255,255,.18) 0%, rgba(255,255,255,.08) 25%, rgba(255,255,255,0) 68%);
+  animation-duration:26s;
+}
+.lux-bg .beam{
+  position:absolute;
+  top:-20vh;
+  width:24vw;
+  height:140vh;
+  opacity:.18;
+  filter:blur(18px);
+  transform:rotate(20deg);
+  background:linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.7), rgba(212,175,55,.55), rgba(255,255,255,0));
+  animation:beamSweep 18s ease-in-out infinite;
+}
+.lux-bg .beam.b1{left:8vw;}
+.lux-bg .beam.b2{right:10vw; animation-delay:-8s; animation-duration:22s;}
+.lux-bg .spark{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,.95);
+  box-shadow:0 0 16px rgba(255,255,255,.45), 0 0 36px rgba(212,175,55,.28);
+  animation:luxSpark linear infinite;
+}
+.lux-bg .spark:nth-child(6){left:6%; top:24%; animation-duration:13s;}
+.lux-bg .spark:nth-child(7){left:14%; top:76%; animation-duration:16s; animation-delay:-5s;}
+.lux-bg .spark:nth-child(8){left:24%; top:48%; animation-duration:18s; animation-delay:-9s;}
+.lux-bg .spark:nth-child(9){left:38%; top:18%; animation-duration:15s; animation-delay:-3s;}
+.lux-bg .spark:nth-child(10){left:52%; top:68%; animation-duration:19s; animation-delay:-8s;}
+.lux-bg .spark:nth-child(11){left:64%; top:34%; animation-duration:17s; animation-delay:-4s;}
+.lux-bg .spark:nth-child(12){left:78%; top:56%; animation-duration:20s; animation-delay:-10s;}
+.lux-bg .spark:nth-child(13){left:88%; top:22%; animation-duration:14s; animation-delay:-6s;}
+@keyframes auroraDrift{
+  0%,100%{transform:translate3d(0,0,0) scale(1);}
+  50%{transform:translate3d(4vw, -2vh, 0) scale(1.08);}
+}
+@keyframes beamSweep{
+  0%,100%{transform:translate3d(0,0,0) rotate(20deg);}
+  50%{transform:translate3d(8vw,4vh,0) rotate(26deg);}
+}
+@keyframes luxSpark{
+  0%{transform:translate3d(0,0,0) scale(.7); opacity:.12;}
+  20%{opacity:1;}
+  50%{transform:translate3d(26px,-20px,0) scale(1.35); opacity:.95;}
+  100%{transform:translate3d(-18px,26px,0) scale(.8); opacity:.18;}
+}
+.concept-card.none-choice{
+  position:relative;
+  border-style:dashed;
+  border-color:rgba(212,175,55,.46);
+  background:
+    linear-gradient(135deg, rgba(29,78,216,.16), rgba(212,175,55,.12)),
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  box-shadow:0 14px 30px rgba(0,0,0,.24), inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.concept-card.none-choice::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  transform:translateX(-100%);
+  animation:noneSweep 5.5s linear infinite;
+}
+.concept-card.none-choice strong{
+  color:var(--gold-soft);
+}
+.concept-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:8px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#fff8d8;
+  background:linear-gradient(135deg, rgba(212,175,55,.24), rgba(29,78,216,.22));
+  border:1px solid rgba(212,175,55,.34);
+}
+@keyframes noneSweep{
+  0%{transform:translateX(-100%);}
+  100%{transform:translateX(100%);}
+}
+
+</style>
+</head>
+<body>
+<div class="floating-blur"></div>
+<div class="orbital-stars">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<div class="lux-bg" aria-hidden="true">
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="aurora a3"></div>
+  <div class="beam b1"></div>
+  <div class="beam b2"></div>
+  <span class="spark"></span>
+  <span class="spark"></span>
+  <span class="spark"></span>
+  <span class="spark"></span>
+  <span class="spark"></span>
+  <span class="spark"></span>
+  <span class="spark"></span>
+  <span class="spark"></span>
+</div>
+
+<div class="app">
+  <section class="panel title-panel">
+    <h1>The Scroll Stopping Surreal Ad Generator</h1>
+  </section>
+
+  <section class="panel topbar">
+    <div class="topbar-actions">
+      <button class="primary" id="generateBtn" type="button">Generate Photo + Video Prompts</button>
+      <button class="secondary" id="randomizeBtn" type="button">Randomize</button>
+      <button class="ghost" id="loadBaseBtn" type="button">Load Base Defaults</button>
+      <button class="ghost" id="clearBtn" type="button">Clear Current Tab</button>
+      <button class="ghost" id="saveBtn" type="button">Save To History</button>
+    </div>
+    <div class="sub-actions">
+      <button class="pill" id="copyAllBtn" type="button">Copy All</button>
+      <button class="ghost" id="downloadBtn" type="button">Download TXT</button>
+      <button class="ghost" id="toggleHistoryBtn" type="button">Toggle Prompt History</button>
+      <button class="ghost jump-btn" type="button" data-jump="#outputSection">Go To Output</button>
+      <button class="pill" id="upscaleBtn" type="button">Upscale Output</button>
+      <button class="ghost" id="scrollTopBtn" type="button">Scroll To Top</button>
+    </div>
+  </section>
+
+  <section class="quick-grid">
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <p class="group-title">1 · Choose concept</p>
+          <p class="helper">All 11 concepts are preserved, and the first card is a clear None / Free Build option when you don’t want any preset concept steering the output.</p>
+        </div>
+        <div class="switch-wrap">
+          <div id="characterModeSwitch" class="switch" aria-label="Toggle character mode" role="button" tabindex="0"></div>
+          <strong>Character mode</strong>
+        </div>
+      </div>
+      <div class="concept-grid" id="conceptGrid"></div>
+    </div>
+
+    <div class="card">
+      <p class="group-title">Current concept style DNA</p>
+      <p id="styleText" class="helper" style="margin-bottom:12px"></p>
+      <div class="preset-shell">
+        <div class="preset-row" id="presetRow"></div>
+      </div>
+      <div class="jump-row" style="margin-top:14px">
+        <button class="jump-btn" type="button" data-jump="#coreSection">Go To Core Inputs</button>
+        <button class="jump-btn" type="button" data-jump="#visualSection">Go To Visual Direction</button>
+        <button class="jump-btn" type="button" data-jump="#transportSection">Go To Transport Universe</button>
+        <button class="jump-btn" type="button" data-jump="#characterSection">Go To Character Styling</button>
+        
+      </div>
+    </div>
+  </section>
+
+  <section id="coreSection" class="panel section-card">
+    <div class="section-head">
+      <div>
+        <p class="group-title">2 · Core campaign setup</p>
+        <p class="helper">Your original build, upgraded only.</p>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><div class="field-head"><label for="brand">Brand / Label / Collection Name</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="brand">Random</button><button class="lock-btn" type="button" data-lock="brand">Unlock</button></div></div><input id="brand" type="text" /></div>
+      <div class="field"><div class="field-head"><label for="subject">Hero Subject</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="subject">Random</button><button class="lock-btn" type="button" data-lock="subject">Unlock</button></div></div><input id="subject" type="text" /></div>
+      <div class="field"><div class="field-head"><label for="product">Product / Object Focus</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="product">Random</button><button class="lock-btn" type="button" data-lock="product">Unlock</button></div></div><input id="product" type="text" /></div>
+      <div class="field"><div class="field-head"><label for="scene">Scene / Environment</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="scene">Random</button><button class="lock-btn" type="button" data-lock="scene">Unlock</button></div></div><input id="scene" type="text" /></div>
+      <div class="field"><div class="field-head"><label for="mechanic">Transport / Display Mechanic</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="mechanic">Random</button><button class="lock-btn" type="button" data-lock="mechanic">Unlock</button></div></div><select id="mechanic"></select></div>
+      <div class="field"><div class="field-head"><label for="palette">Color Story</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="palette">Random</button><button class="lock-btn" type="button" data-lock="palette">Unlock</button></div></div><select id="palette"></select></div>
+      <div class="field"><div class="field-head"><label for="texture">Materials / Texture Details</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="texture">Random</button><button class="lock-btn" type="button" data-lock="texture">Unlock</button></div></div><textarea id="texture"></textarea></div>
+      <div class="field"><div class="field-head"><label for="extras">Extra Story / Custom Add-ons</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="extras">Random</button><button class="lock-btn" type="button" data-lock="extras">Unlock</button></div></div><textarea id="extras"></textarea></div>
+      <div class="field"><div class="field-head"><label for="displayHeadline">Display Brand Name / Headline</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="displayHeadline">Random</button><button class="lock-btn" type="button" data-lock="displayHeadline">Unlock</button></div></div><input id="displayHeadline" type="text" placeholder="Enter the main brand name or headline" /></div>
+      <div class="field"><div class="field-head"><label for="displayTagline">Display Tagline</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="displayTagline">Random</button><button class="lock-btn" type="button" data-lock="displayTagline">Unlock</button></div></div><input id="displayTagline" type="text" placeholder="Enter the tagline that sits under or near the headline" /></div>
+      <div class="field"><div class="field-head"><label for="headlinePlacement">Headline Placement</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="headlinePlacement">Random</button><button class="lock-btn" type="button" data-lock="headlinePlacement">Unlock</button></div></div><select id="headlinePlacement"></select></div>
+      <div class="field"><div class="field-head"><label for="taglinePlacement">Tagline Placement</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="taglinePlacement">Random</button><button class="lock-btn" type="button" data-lock="taglinePlacement">Unlock</button></div></div><select id="taglinePlacement"></select></div>
+      <div class="field"><div class="field-head"><label for="textStyle">Text Style Direction</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="textStyle">Random</button><button class="lock-btn" type="button" data-lock="textStyle">Unlock</button></div></div><select id="textStyle"></select></div>
+      <div class="field"><div class="field-head"><label for="typographyEffects">Typography Effects</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="typographyEffects">Random</button><button class="lock-btn" type="button" data-lock="typographyEffects">Unlock</button></div></div><input id="typographyEffects" class="hidden-input" type="text" /><div class="typography-effects-wrap"><div class="effect-help">Pick up to 2 effects. Smart random keeps the combos clean so it doesn't choose goofy shit that fights each other.</div><div class="typography-effects-grid" id="typographyEffectsGrid"></div></div></div>
+    </div>
+  </section>
+
+  <section id="visualSection" class="panel section-card">
+    <div class="section-head">
+      <div>
+        <p class="group-title">3 · Visual direction</p>
+        <p class="helper">Same structure, deeper option banks.</p>
+      </div>
+    </div>
+    <div class="advanced-grid">
+      <div class="field"><div class="field-head"><label for="mood">Mood</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="mood">Random</button><button class="lock-btn" type="button" data-lock="mood">Unlock</button></div></div><select id="mood"></select></div>
+      <div class="field"><div class="field-head"><label for="camera">Camera / Framing</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="camera">Random</button><button class="lock-btn" type="button" data-lock="camera">Unlock</button></div></div><select id="camera"></select></div>
+      <div class="field"><div class="field-head"><label for="lighting">Lighting</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="lighting">Random</button><button class="lock-btn" type="button" data-lock="lighting">Unlock</button></div></div><select id="lighting"></select></div>
+      <div class="field"><div class="field-head"><label for="finish">Rendering Finish</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="finish">Random</button><button class="lock-btn" type="button" data-lock="finish">Unlock</button></div></div><select id="finish"></select></div>
+      <div class="field"><div class="field-head"><label for="composition">Composition</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="composition">Random</button><button class="lock-btn" type="button" data-lock="composition">Unlock</button></div></div><select id="composition"></select></div>
+      <div class="field"><div class="field-head"><label for="lensFeel">Lens Feel</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="lensFeel">Random</button><button class="lock-btn" type="button" data-lock="lensFeel">Unlock</button></div></div><select id="lensFeel"></select></div>
+      <div class="field"><div class="field-head"><label for="cameraMotion">Video Camera Motion</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="cameraMotion">Random</button><button class="lock-btn" type="button" data-lock="cameraMotion">Unlock</button></div></div><select id="cameraMotion"></select></div>
+      <div class="field"><div class="field-head"><label for="shadow">Shadow Behavior</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="shadow">Random</button><button class="lock-btn" type="button" data-lock="shadow">Unlock</button></div></div><select id="shadow"></select></div>
+      <div class="field"><div class="field-head"><label for="atmosphere">Atmosphere</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="atmosphere">Random</button><button class="lock-btn" type="button" data-lock="atmosphere">Unlock</button></div></div><select id="atmosphere"></select></div>
+      <div class="field"><div class="field-head"><label for="quality">Quality Layer</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="quality">Random</button><button class="lock-btn" type="button" data-lock="quality">Unlock</button></div></div><select id="quality"></select></div>
+      <div class="field"><div class="field-head"><label for="stylingNotes">Styling Add-on</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="stylingNotes">Random</button><button class="lock-btn" type="button" data-lock="stylingNotes">Unlock</button></div></div><input id="stylingNotes" type="text" /></div>
+      <div class="field"><div class="field-head"><label for="customNote">Custom Notes</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="customNote">Random</button><button class="lock-btn" type="button" data-lock="customNote">Unlock</button></div></div><input id="customNote" type="text" /></div>
+    </div>
+  </section>
+
+  <section id="transportSection" class="panel section-card">
+    <div class="section-head">
+      <div>
+        <p class="group-title">4 · Transport universe</p>
+        <p class="helper">New integrated surreal transport system. Randomizer uses it, outputs use it, and your existing concepts stay intact.</p>
+      </div>
+    </div>
+    <div class="transport-grid">
+      <div class="field"><div class="field-head"><label for="transportType">Transport Type</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="transportType">Random</button><button class="lock-btn" type="button" data-lock="transportType">Unlock</button></div></div><select id="transportType"></select></div>
+      <div class="field"><div class="field-head"><label for="transportAesthetic">Transport Aesthetic</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="transportAesthetic">Random</button><button class="lock-btn" type="button" data-lock="transportAesthetic">Unlock</button></div></div><select id="transportAesthetic"></select></div>
+      <div class="field"><div class="field-head"><label for="transportFunction">Transport Function</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="transportFunction">Random</button><button class="lock-btn" type="button" data-lock="transportFunction">Unlock</button></div></div><select id="transportFunction"></select></div>
+      <div class="field"><div class="field-head"><label for="transportMotion">Motion Style</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="transportMotion">Random</button><button class="lock-btn" type="button" data-lock="transportMotion">Unlock</button></div></div><select id="transportMotion"></select></div>
+      <div class="field"><div class="field-head"><label for="transportScale">Scale</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="transportScale">Random</button><button class="lock-btn" type="button" data-lock="transportScale">Unlock</button></div></div><select id="transportScale"></select></div>
+    </div>
+  </section>
+
+  <section id="characterSection" class="panel section-card">
+    <div class="section-head">
+      <div>
+        <p class="group-title">5 · Character styling</p>
+        <p class="helper">Your character categories are preserved and upgraded.</p>
+      </div>
+      <div class="switch-wrap">
+        <div id="identityLockSwitch" class="switch active" aria-label="Toggle identity anchors" role="button" tabindex="0"></div>
+        <strong>Keep identity anchors stable across 3 variations</strong>
+      </div>
+    </div>
+
+    <div class="character-wrap">
+      <div class="detail-grid">
+        <div class="field"><div class="field-head"><label for="cast">Cast / Character Description</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="cast">Random</button><button class="lock-btn" type="button" data-lock="cast">Unlock</button></div></div><input id="cast" type="text" /></div>
+        <div class="field"><div class="field-head"><label for="wardrobe">Wardrobe / Fashion Styling</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="wardrobe">Random</button><button class="lock-btn" type="button" data-lock="wardrobe">Unlock</button></div></div><input id="wardrobe" type="text" /></div>
+        <div class="field"><div class="field-head"><label for="beauty">Hair / Makeup / Accessories</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="beauty">Random</button><button class="lock-btn" type="button" data-lock="beauty">Unlock</button></div></div><input id="beauty" type="text" /></div>
+        <div class="field"><div class="field-head"><label for="pose">Pose / Movement</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="pose">Random</button><button class="lock-btn" type="button" data-lock="pose">Unlock</button></div></div><input id="pose" type="text" /></div>
+        <div class="field"><div class="field-head"><label for="gender">Gender Styling</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="gender">Random</button><button class="lock-btn" type="button" data-lock="gender">Unlock</button></div></div><select id="gender"></select></div>
+        <div class="field"><div class="field-head"><label for="ethnicity">Ethnicity</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="ethnicity">Random</button><button class="lock-btn" type="button" data-lock="ethnicity">Unlock</button></div></div><select id="ethnicity"></select></div>
+        <div class="field"><div class="field-head"><label for="skinTone">Skin Tone</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="skinTone">Random</button><button class="lock-btn" type="button" data-lock="skinTone">Unlock</button></div></div><select id="skinTone"></select></div>
+        <div class="field"><div class="field-head"><label for="eyeColor">Eye Color</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="eyeColor">Random</button><button class="lock-btn" type="button" data-lock="eyeColor">Unlock</button></div></div><select id="eyeColor"></select></div>
+        <div class="field"><div class="field-head"><label for="hairstyle">Hairstyle</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="hairstyle">Random</button><button class="lock-btn" type="button" data-lock="hairstyle">Unlock</button></div></div><select id="hairstyle"></select></div>
+        <div class="field"><div class="field-head"><label for="hairColor">Hair Color</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="hairColor">Random</button><button class="lock-btn" type="button" data-lock="hairColor">Unlock</button></div></div><select id="hairColor"></select></div>
+        <div class="field"><div class="field-head"><label for="lashes">Lashes</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="lashes">Random</button><button class="lock-btn" type="button" data-lock="lashes">Unlock</button></div></div><select id="lashes"></select></div>
+        <div class="field"><div class="field-head"><label for="makeup">Makeup</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="makeup">Random</button><button class="lock-btn" type="button" data-lock="makeup">Unlock</button></div></div><select id="makeup"></select></div>
+        <div class="field"><div class="field-head"><label for="expression">Expression</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="expression">Random</button><button class="lock-btn" type="button" data-lock="expression">Unlock</button></div></div><select id="expression"></select></div>
+        <div class="field"><div class="field-head"><label for="bodyStyle">Body Styling</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="bodyStyle">Random</button><button class="lock-btn" type="button" data-lock="bodyStyle">Unlock</button></div></div><select id="bodyStyle"></select></div>
+        <div class="field"><div class="field-head"><label for="ornate">Ornate Elements</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="ornate">Random</button><button class="lock-btn" type="button" data-lock="ornate">Unlock</button></div></div><select id="ornate"></select></div>
+        <div class="field"><div class="field-head"><label for="props">Props</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="props">Random</button><button class="lock-btn" type="button" data-lock="props">Unlock</button></div></div><select id="props"></select></div>
+      </div>
+
+      <div class="gender-panels">
+        <div class="gender-card" id="womenPanel">
+          <p class="group-title">Women styling</p>
+          <div class="detail-grid">
+            <div class="field"><div class="field-head"><label for="womenOutfit">Women’s Outfit</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="womenOutfit">Random</button><button class="lock-btn" type="button" data-lock="womenOutfit">Unlock</button></div></div><select id="womenOutfit"></select></div>
+            <div class="field"><div class="field-head"><label for="womenShoes">Women’s Shoes</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="womenShoes">Random</button><button class="lock-btn" type="button" data-lock="womenShoes">Unlock</button></div></div><select id="womenShoes"></select></div>
+            <div class="field"><div class="field-head"><label for="womenAccessories">Women’s Accessories</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="womenAccessories">Random</button><button class="lock-btn" type="button" data-lock="womenAccessories">Unlock</button></div></div><select id="womenAccessories"></select></div>
+          </div>
+        </div>
+
+        <div class="gender-card" id="menPanel">
+          <p class="group-title">Men styling</p>
+          <div class="detail-grid">
+            <div class="field"><div class="field-head"><label for="menOutfit">Men’s Outfit</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="menOutfit">Random</button><button class="lock-btn" type="button" data-lock="menOutfit">Unlock</button></div></div><select id="menOutfit"></select></div>
+            <div class="field"><div class="field-head"><label for="menShoes">Men’s Shoes</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="menShoes">Random</button><button class="lock-btn" type="button" data-lock="menShoes">Unlock</button></div></div><select id="menShoes"></select></div>
+            <div class="field"><div class="field-head"><label for="menAccessories">Men’s Accessories</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="menAccessories">Random</button><button class="lock-btn" type="button" data-lock="menAccessories">Unlock</button></div></div><select id="menAccessories"></select></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-head"><label for="identityNotes">Identity / Likeness Notes</label><div class="field-tools"><button class="rand-btn" type="button" data-rand-field="identityNotes">Random</button><button class="lock-btn" type="button" data-lock="identityNotes">Unlock</button></div></div>
+        <textarea id="identityNotes"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <section id="outputSection" class="panel section-card">
+    <div class="section-head">
+      <div>
+        <p class="group-title">6 · Output studio</p>
+        <p class="helper">Same working output system. Same separate photo/video logic.</p>
+      </div>
+      <div class="sub-actions">
+        <button class="primary" id="generateBottomBtn" type="button">Generate Again</button>
+        <button class="pill" id="copyPhotoBtn" type="button">Copy Photo</button>
+        <button class="pill" id="copyVideoBtn" type="button">Copy Video</button>
+      </div>
+    </div>
+
+    <div class="output-panels">
+      <div class="card">
+        <div class="section-head" style="margin-bottom:12px"><h3 style="margin:0">Photo prompts</h3></div>
+        <div class="variation-tabs" id="photoTabs"></div>
+        <div class="variation-note" id="photoVariationNote">Variation notes will appear here after generation.</div>
+        <div class="outbox" id="photoOutput"><span class="empty">Your photo prompts will appear here.</span></div>
+      </div>
+      <div class="card">
+        <div class="section-head" style="margin-bottom:12px"><h3 style="margin:0">Video prompts</h3></div>
+        <div class="variation-tabs" id="videoTabs"></div>
+        <div class="variation-note" id="videoVariationNote">Variation notes will appear here after generation.</div>
+        <div class="outbox" id="videoOutput"><span class="empty">Your video prompts will appear here.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="historySection" class="panel section-card hidden">
+    <div class="section-head">
+      <div>
+        <p class="group-title">Prompt history</p>
+        <p class="helper">Saved entries stay in your browser for this file. Click one to reload it.</p>
+      </div>
+      <button class="ghost" id="clearHistoryBtn" type="button">Clear History</button>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </section>
+
+  <footer>All rights reserved by GlamorousGrammyGlowUp.</footer>
+</div>
+
+<script>
+function cleanText(v){
+  return String(v || "")
+    .replace(/\s+/g," ")
+    .replace(/\s+,/g,",")
+    .replace(/,\s*,+/g,", ")
+    .replace(/\s+\./g,".")
+    .replace(/\.\s*\./g,".")
+    .trim();
+}
+function joinParts(parts){
+  return cleanText((parts || []).map(cleanText).filter(Boolean).join(", "));
+}
+function choice(arr, fallback=""){
+  return Array.isArray(arr) && arr.length ? arr[Math.floor(Math.random() * arr.length)] : fallback;
+}
+function ensureSelectOption(selectEl, value){
+  if(!selectEl || selectEl.tagName !== "SELECT") return;
+  const exists = [...selectEl.options].some(opt => opt.value === String(value));
+  if(!exists){
+    const opt = document.createElement("option");
+    opt.value = String(value);
+    opt.textContent = String(value);
+    selectEl.appendChild(opt);
+  }
+}
+function populateSelect(sel, opts){
+  sel.innerHTML = "";
+  [...new Set(opts || [])].forEach(v => {
+    const o = document.createElement("option");
+    o.value = v;
+    o.textContent = v;
+    sel.appendChild(o);
+  });
+}
+function saveJSON(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+function loadJSON(key, fallback){ try{ return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }catch{return fallback;} }
+
+const exactCount = 50;
+
+const sharedBanks = {
+  brand:["Maison Blushline","Velvet Halo House","Rosé Orbit Studio","Cloudlight Society","Lumière Arcade","Petal Theory Label","Opaline Atelier","Gilded Air Club","Maison Velvet Bloom","Highline Rosé Studio","Aurora Gloss House","Pearlline Campaign Co.","Chérie Skyline Label","Noir Petal Society","Satin Lift Studio","Eclipse Blush Atelier"],
+  subject:["oversized luxury product reveal","surreal branded campaign moment","hero object suspended above a dreamy city","premium retail fantasy centerpiece","editorial launch-day spectacle","romantic oversized commercial scene","high-gloss billboard hero concept","luxury object fantasy installation","fashion-forward surreal ad scene","premium cinematic product tableau"],
+  product:["sculptural branded object with glossy accents","oversized luxury gift object","premium campaign product centerpiece","hero item with reflective detail","high-gloss statement accessory","oversized branded retail object","cinematic beauty-product centerpiece","dreamy fashion-campaign hero item","editorial display object with premium materials","luxury collectible-style product hero"],
+  scene:["dreamy skyline under pastel haze","clean editorial city avenue","soft cloudscape with premium depth","bright surreal retail environment","golden-hour metropolitan corridor","romantic European boulevard","premium toy-store display environment","clear alpine canyon under crisp daylight","Paris-style fashion skyline","floating architectural dreamspace","clean studio display world","high-gloss commercial runway backdrop"],
+  texture:["glossy lacquered surfaces, sculpted highlights, soft haze depth, tactile material richness","velvety textures, reflective accents, premium plastic shine, crisp product edges","satin materials, polished hardware, luminous surfaces, dimensional shadow falloff","mirror-like chrome highlights, plush fabric detail, glossy reflections, clean premium contrast","soft matte packaging, reflective trim, airy atmosphere, dimensional finish","clear acrylic surfaces, satin sheen, polished lacquer, premium material layering","buttery texture detail, velvety petals, luminous edge highlights, crisp hero read","frosted surfaces, pearl glow, smooth commercial polish, rich tactile depth"],
+  extras:["clean ad-space composition, premium spacing, floating sparkle accents, controlled atmospheric haze","subtle depth layers, elegant negative space, commercial polish, refined motion cues","campaign-ready visual storytelling, premium finish, rich highlights, polished reflections","soft floating accents, billboard-ready clarity, elegant air movement, luxury spacing","controlled decorative detail, crisp silhouette readability, atmospheric polish, premium hero emphasis","subtle skyline depth, polished edge glow, refined commercial storytelling, clean framing"],
+  stylingNotes:["editorial campaign polish","premium retail presentation","glossy luxury styling","high-end launch-day energy","clean ad-space discipline","polished surreal storytelling","billboard-ready luxury polish","fashion-poster clarity","premium commercial control","high-gloss editorial energy","luxury retail shine"],
+  customNote:["keep composition elegant and uncluttered","push the concept in a cleaner editorial direction","prioritize premium glow and clean highlights","treat it like a finished poster","keep the hero read immediate","avoid clutter","emphasize premium reflections and clean spacing","keep everything readable and premium"],
+  displayHeadline:["Maison Halo","Velvet Bloom","Rosé Arrival","Cloudlight Drop","Gilded Weekend","Petale Studio","Velvet Departure Club","Dolly Drop House"],
+  displayTagline:["Luxury That Floats Above the Rest","Where Glam Meets Motion","Made to Stop the Scroll","Soft Luxury. Bold Entrance.","The Campaign Starts Here","Carry the Fantasy","Premium Shine. Instant Drama.","Romance in Motion"],
+  headlinePlacement:["center top","top left","top right","upper middle","center middle","left middle","right middle","bottom center","bottom left","bottom right"],
+  taglinePlacement:["directly under headline","centered under headline","small line above headline","top left under headline","top right under headline","bottom center under headline","left lower third","right lower third","footer centered","floating beside headline"],
+  textStyle:["luxury serif headline with clean sans-serif tagline","bold fashion-poster headline with delicate tagline","glossy editorial headline with airy small tagline","modern billboard headline with refined subline","romantic luxury headline with petite tagline","high-contrast campaign headline with elegant tagline","clean upscale headline with centered tagline","premium magazine-cover headline with chic subline"],
+  typographyEffects:["bold","hollow outline","3D extruded","chrome metallic","glass glossy","neon glow","embossed","debossed","shadowed","beveled","foil stamped","soft blur glow"],
+  cast:["one polished luxury model with strong editorial presence","one glamorous lead with cinematic beauty styling","three polished fashion dolls with distinct glam faces","a confident luxury model with striking presence","a coordinated high-fashion cast with clear visual hierarchy","two editorial characters with synchronized campaign energy","one statement fashion figure with strong hero presence","a polished luxury cast with distinct styling"],
+  wardrobe:["high-glam editorial wardrobe with luxe texture contrast","structured designer look with glossy luxury accents","high-fashion editorial styling with polished tailoring","statement glam styling with rich texture contrast","premium fashion silhouette with sculpted fabric detail","runway-ready luxury styling with reflective trim","soft romantic fashion styling with premium drape","sharp commercial glam styling with clean structure"],
+  beauty:["glossy sculpted hair, radiant skin, dimensional shine, polished beauty styling","luminous glam skin, glossy lips, sleek polished hair","editorial beauty finish with sculpted glow and crisp lashes","high-gloss beauty styling with dimensional hair shine","clean luxury makeup with refined accessories","wet-look glam beauty with pearl highlights","polished beauty-doll styling with reflective skin glow"],
+  pose:["confident hero stance with subtle movement","confident forward stance","elegant editorial turn","poised luxury stride","heroic pose with clear product focus","soft over-the-shoulder glamour pose","power stance with fashion energy","mid-stride runway motion","elevated product-presenting pose","campaign-ready symmetrical stance"],
+  composition:["centered symmetrical luxury composition","editorial asymmetrical balance","hero-object dominant layout","clean vertical poster composition","wide campaign spread layout","tight premium product focus","balanced negative-space composition","billboard-centered composition","luxury hero composition","architectural display composition","runway tableau composition","clean product-stage composition"],
+  lensFeel:["35mm editorial lens feel","50mm balanced premium lens feel","85mm luxury compression feel","wide-angle cinematic lens feel","clean commercial lens clarity","soft-lens dreamy glamour","macro product detail lens feel","telephoto fashion compression","architectural wide-depth lens feel","hero close-focus lens feel","poster-scale perspective feel","editorial portrait lens feel"],
+  cameraMotion:["slow cinematic push-in","smooth floating crane rise","gentle orbit reveal","heroic forward glide","subtle parallax drift","elegant tracking move","slow overhead descent","luxury reveal tilt-up","clean lateral slide","precision product zoom","curved dolly sweep","commercial glide pass"],
+  shadow:["soft feathered shadows","crisp form shadows","deep contrast shadows","glossy reflected shadows","soft mist-softened shadows","clean commercial floor shadow","ambient runway shadows","subtle architectural shadow falloff","high-polish reflective shadow play","airy diffusion shadows","controlled backlit silhouette shadows","sculpted product-cast shadows"],
+  atmosphere:["hazy atmosphere","glow bloom","soft mist","bokeh sparkle","ambient shimmer","polished highlights in the air","luxury haze veil","powdery light diffusion","glass-clear commercial air","romantic dust motes","editorial softness","high-altitude crispness"],
+  quality:["hyper-detailed premium finish","8K-style descriptive richness","luxury campaign precision","high-end commercial polish","cinematic depth and clarity","visually lush premium realism","clean billboard-level finish","editorial-grade realism","high-gloss premium detailing","crisp polished reflections","finished hero-shot quality","premium launch-campaign resolution"],
+  gender:["women","men","non-binary","mixed cast"],
+  ethnicity:["Black","East Asian","South Asian","Latina","Middle Eastern","White","Southeast Asian","mixed ethnicity cast","North African","Afro-Latina","Central Asian","Pacific Islander"],
+  skinTone:["porcelain","fair beige","light neutral beige","golden beige","warm honey","olive tan","caramel","toffee bronze","deep bronze","rich espresso","cool beige","sunlit amber"],
+  eyeColor:["brown","hazel","green","blue","gray","amber","dark brown","ice gray","gold-flecked hazel","deep green"],
+  hairstyle:["sleek long waves","glass-straight center part","retro bombshell curls","high ponytail","soft body waves","editorial blunt bob","voluminous blowout","braided crown","sculpted pixie cut","side-parted glam curls","long braided ponytail","wet-look slick back","luxury half-up waves","curly high puff","defined spiral curls","sleek low bun"],
+  hairColor:["jet black","espresso brown","soft chestnut","golden blonde","platinum blonde","copper auburn","rich burgundy","mocha brunette","honey blonde","rose brown","blue-black shine","warm caramel brunette"],
+  lashes:["dramatic flutter lashes","wispy luxe lashes","clean editorial lashes","full glam lashes","soft doll lashes","cat-eye lifted lashes","feathered runway lashes","natural luxury lashes","bold layered glam lashes","separated glossy lashes"],
+  makeup:["editorial glossy glam","soft sculpted glam","clean luxury beauty","high-contrast runway glam","radiant skin with gloss lips","golden-hour bronzed glam","cool-toned editorial glam","pearl-highlight beauty look","soft matte luxury glam","wet-skin luminous glam"],
+  expression:["confident gaze","soft smile","serious editorial stare","joyful luxury energy","sultry glam expression","playful smirk","elegant poised calm","bold campaign confidence","dreamy romantic gaze","powerful fashion intensity"],
+  bodyStyle:["balanced model proportions","soft glam curves","tall runway silhouette","petite editorial styling","athletic luxury frame","elongated fashion proportions","soft feminine silhouette","sharp tailored silhouette","slim sculpted profile","statuesque glam presence"],
+  ornate:["minimal luxury hardware","pearl details","crystal accents","metallic trim","sculpted floral ornament","rhinestone sparkle","mirror-chrome details","luxury embroidery accents","glass bead detail","soft feather trim"],
+  props:["no extra props","structured mini bag","glossy sunglasses","sparkling luggage","floral prop cluster","luxury shopping bag","metallic gift box","crystal perfume bottle","fashion cane","editorial bouquet","statement phone accessory","mini boxed accessory"],
+  womenOutfit:["structured mini dress","corset gown","sparkling mini dress","tailored luxury set","editorial catsuit","glossy fashion coat","silk draped evening gown","feather-trimmed cocktail dress","crystal mesh bodycon dress","wide-leg satin suit","cinched-waist blazer dress","runway trench look","luxury knit set"],
+  womenShoes:["crystal heels","stiletto heels","platform heels","knee-high boots","sparkling pumps","sleek sandals","crystal ankle-strap heels","pointed-toe mules","editorial thigh-high boots","glossy patent heels","minimal luxury flats"],
+  womenAccessories:["statement earrings","crystal clutch","oversized glam shades","statement hair jewelry","diamond choker","stacked bangles","structured top-handle mini bag","metallic belt detail","drop earrings","luxury scarf accent"],
+  menOutfit:["tailored suit","luxury bomber set","editorial monochrome streetwear","structured tuxedo-inspired look","fashion knit set","sleek travel look","double-breasted suit with shine","runway bomber and tailored pants","monochrome fashion suit","sharp velvet jacket look","luxury trench over suit"],
+  menShoes:["polished loafers","luxury sneakers","Chelsea boots","sleek dress shoes","high-fashion boots","patent dress loafers","minimal leather boots","designer low-tops","structured ankle boots","runway derby shoes"],
+  menAccessories:["designer watch","structured sunglasses","chain detail","travel duffel","pocket square","signet ring","metal cuff","leather gloves","minimal scarf accent","fashion lapel pin"],
+  identityNotes:["preserve facial structure, skin tone, body shape, and overall identity while changing styling and scene details","keep the same person recognizable across all three variations","maintain visual identity anchors while shifting only outfit, beauty, camera, and environment","preserve hairline, face shape, and overall recognizable identity","keep the same core person while changing fashion, lighting, and scene styling"]
+};
+
+const transportTypeOptions = ["UFO","Crystal Moth Carrier","Chrome Serpent Lift","Celestial Halo Ring","Robotic Swan Vessel","Floating Crown Throne","Glass Orb Capsule","Butterfly Parade Float","Cosmic Portal Frame","Chandelier Lift System","Mechanical Horse Carriage","Moon Pod Carrier","Giant Jewelry Box Lift","Winged Marble Platform","Floating Birdcage Display","Robotic Spider Rig","Candy Rocket Capsule","Petal Hover Raft","Mirror Cube Hovercraft","Giant Ribbon Machine","Angel Wing Display","Luxury Carousel Platform","Floating Runway Stage","Magnetic Hover Disc","Robotic Fashion Mule","Giant Perfume Bottle Airship","Crystal Sled","Editorial Scaffold Lift","Glowing Lotus Platform","Divine Hand Carrier","Floating Treasure Chest","Ice Throne Lift","Phoenix Carrier","Clockwork Orbital Machine","Velvet Cloud Pod","Neon Jellyfish Lift","Giant Heeled Shoe Carrier","Crystal Cage Elevator","Floating Library Relic","Stained Glass Hover Shrine","Planet Ring Carrier","Robotic Dragonfly Rig","Pearl Shell Lift","Golden Pyramid Hover Base","Mirror Ballroom Platform","Opera Mask Carrier","Floating Lantern Fleet","Mythic Wolf Sled","Crystal Web Suspension","Glowing Hourglass Rig"];
+const transportAestheticOptions = ["glossy luxury","chrome futuristic","alien metallic","crystal glam","soft celestial","dark luxury","editorial couture","candy-coated surreal","marble divine","neon sci-fi","iridescent holographic","molten gold","pearlized soft glam","matte military luxe","glassy high-fashion","jeweled opulence","pastel dreamcore","high-polish commercial","retro-futurist","divine radiant","frosted ice luxury","cosmic shimmer","metallic noir","toy-like premium","sculptural museum-grade","luminous angelic","gothic glam","floral fantasy","mirrored editorial","expensive industrial"];
+const transportFunctionOptions = ["carrying the product","lifting the product","revealing the product","framing the product","hovering behind the product","transporting the product","presenting the product on a platform","emerging with the product","opening to reveal the product","surrounding the product","escorting the product","spotlighting the product","suspending the product midair","towing the product display","orbiting the product","dropping the product dramatically","protecting the product like a relic","cradling the product","pulling the product through the scene","acting as the hero centerpiece"];
+const transportMotionOptions = ["hovering still","slow cinematic glide","floating upward","dramatic descent","orbiting slowly","drifting through clouds","sweeping across the skyline","runway-style arrival","suspended in still air","rising through light beams","spiraling around the product","gentle parallax drift","forward power movement","celestial float","hovering with subtle rotation"];
+const transportScaleOptions = ["miniature accent","compact","realistic scale","slightly oversized","oversized","monumental","billboard-scale","building-scale","skyscraper-scale","impossible surreal scale"];
+
+const conceptExpansionSeeds = {
+  mechanics:["luxury display rig","floating ribbon suspension","editorial hover installation","soft cloud tether lift","premium aerial mount","brand parade carry","glossy suspended reveal","elevated storefront lift"],
+  palettes:["champagne blush and pearl","lavender mist and cream","soft rose and vanilla","powder lilac and silver","frosted pink and white","sunset peach and pearl","bubble blush and ivory","rose gold and cream"],
+  moods:["polished editorial calm","glossy premium drama","soft luxury wonder","billboard-ready excitement","playful prestige","cinematic elegance","premium fantasy energy","lush ad-world charm"],
+  cameras:["hero product close-up","billboard symmetry framing","architectural wide shot","editorial three-quarter angle","low luxury poster angle","premium corridor framing","runway hero perspective","sculptural object view"],
+  lights:["soft editorial spotlight","polished showroom glow","rim-lit luxury contrast","silky front diffusion","reflective luxe daylight","clean commercial studio light","romantic blush ambient light","glassy premium highlight light"],
+  finishes:["billboard-ready commercial realism","clean premium launch render","high-end poster realism","glossy cinematic product realism","polished ad-world finish","premium fashion poster finish","hyper-clean luxury realism","soft glossy editorial render"]
+};
+
+const noneConcept = {id:"none-concept",name:"00 · None / Free Build",short:"No preset concept",style:"Free build mode is on. Your current concept is turned off, so you can build with your own subject, product, scene, transport, characters, and styling without a preset concept steering the output.",base:"",use:"Use this when you want no concept preset and want to build freely.",negative:"",character:false,chips:["free build","no concept preset","custom direction"],mechanics:["no preset mechanic","freeform presentation rig","custom transport setup","open display direction"],palettes:["open custom palette","brand-led palette","editorial custom color story","free build luxury palette"],moods:["open custom mood","editorial free build mood","brand-defined atmosphere","custom luxury tone"],cameras:["open custom framing","free build camera direction","editorial custom shot","brand-led camera angle"],lights:["open custom lighting","free build light direction","editorial custom illumination","brand-led lighting setup"],finishes:["open custom finish","free build commercial realism","editorial custom render finish","brand-led finish direction"],defaults:{}};
+
+const concepts = [{id:"floral-airlift",name:"01 · Floral Airlift Bag",short:"Helicopter + bloom bag",style:"Dreamy cinematic surrealism with glossy commercial realism, polished pastel luxury, airy cloud bloom, elegant high-end ad composition, oversized object fantasy, soft architectural haze, and romantic premium 3D-photo styling.",base:"an oversized floral-filled shopping bag suspended by a glossy pink helicopter above a luxury skyline, soft pink clouds, romantic editorial ad styling, polished surreal realism, premium materials, airy depth, cinematic commercial finish",use:"Luxury campaign mockups, flower delivery ads, romantic holiday visuals, dreamy brand launch posters, feminine e-commerce hero art.",negative:"no warped bag handles, no broken rotor blades, no muddy petals, no dull lighting, no extra aircraft, no messy skyline edges, no text distortions",character:false,chips:["pastel luxury","oversized object","dreamy skyline","soft pink haze"],mechanics:["helicopter sling lift","floating crane suspension","ribbon harness airlift","cloud-hover delivery rig"],palettes:["blush pink and cream","rose quartz and pearl","cotton candy pink and silver","soft peach and vanilla"],moods:["romantic","airy luxe","whimsical prestige","soft dreamy glamour"],cameras:["low-angle hero shot","centered editorial framing","wide vertical campaign shot","slightly upward cinematic perspective"],lights:["soft cloud daylight","pink sunset glow","diffused luxury daylight","hazy golden blush light"],finishes:["hyper-real glossy realism","premium 3D ad realism","cinematic editorial realism","soft-lens luxury commercial"],defaults:{brand:"Rosé Cloud Atelier",subject:"flower-filled shopping bag airlift",product:"oversized pastel gift bag packed with sculpted roses and peonies",scene:"dreamy metropolitan skyline under blush cloud cover",mechanic:"helicopter sling lift",palette:"blush pink and cream",mood:"soft dreamy glamour",camera:"slightly upward cinematic perspective",lighting:"diffused luxury daylight",finish:"premium 3D ad realism",texture:"glossy painted helicopter shell, satin rope handles, dense layered petals, velvety floral texture, soft skyline haze",extras:"floating flower dust, soft aerial tension lines, distant towers fading into mist, clean luxury composition"}},{id:"jet-doll-lineup",name:"02 · Jet Set Doll Lineup",short:"Retro glam models + jet",style:"High-glam fashion tableau with premium doll-like realism, glossy skin finish, retro-futurist editorial energy, high contrast neon accents, sculpted hair, sparkling fabric detail, and cinematic runway composition.",base:"a glamorous lineup of retro-styled fashion dolls marching with glitter luggage in front of a neon-lit private jet, luxury travel fantasy, bold glam contrast, sculpted beauty styling, sparkling textures, editorial runway composition",use:"Travel-fashion campaigns, party jet branding, bachelorette trip promos, retro glam mood boards, statement luxury social graphics.",negative:"no extra limbs, no melted sunglasses, no muddy sequins, no collapsed luggage wheels, no distorted faces, no uneven anatomy, no flat lighting",character:true,chips:["retro glam","private jet","sparkle luggage","fashion lineup"],mechanics:["runway walk formation","jet-side fashion procession","staged glam arrival","editorial lineup march"],palettes:["pink sparkle and noir","blush neon and ivory","fuchsia glow and cocoa bronze","ice pink and hot neon"],moods:["confident glam","after-dark luxury","retro bombshell energy","fashion takeover"],cameras:["wide runway perspective","front-facing editorial lineup","low-angle glam march","cinematic fashion poster framing"],lights:["neon jet rim light","nighttime glam spotlight","pink runway glow","mixed cool night and hot pink light"],finishes:["glossy doll realism","cinematic fashion realism","high-contrast luxury poster finish","premium 3D glam render"],defaults:{brand:"Velvet Departure Club",subject:"retro glam jet-set lineup",product:"sparkling pink luggage collection",scene:"nighttime private airstrip with pale desert or snow-textured ground",mechanic:"jet-side fashion procession",palette:"pink sparkle and noir",mood:"fashion takeover",camera:"front-facing editorial lineup",lighting:"mixed cool night and hot pink light",finish:"glossy doll realism",texture:"sequined bodysuits, fluffy faux-fur sleeves, mirror-like luggage sparkle, polished skin sheen, glossy jet surface",extras:"neon aircraft outline, mountain silhouettes, luxury girl-gang energy, rhythmic suitcase repetition",cast:"five glamorous retro fashion dolls with distinct beauty looks and confident runway presence",wardrobe:"strapless sparkling bodysuits with oversized fluffy blush sleeves",beauty:"sculpted vintage hair, luminous glam skin, glossy lips, futuristic neon shutter shades",pose:"confident synchronized strut carrying rolling glitter suitcases"}} ,{id:"sale-jet-hearts",name:"03 · Heart Balloon Sale Jet",short:"Airplane + discount cube",style:"Surreal commercial realism with crisp sunrise backlight, metallic product surfaces, celebratory heart-shaped balloon graphics, large-scale campaign fantasy, and polished aviation-ad poster energy.",base:"a glossy red airplane carrying giant metallic sale packages suspended by red heart balloons over a European city at sunrise, polished surreal advertising realism, romantic commercial spectacle, cinematic backlight, premium promo visual",use:"Sale ads, Valentine promos, shipping campaigns, discount announcements, festive promo posters.",negative:"no broken engines, no twisted balloon strings, no unreadable package text, no warped city buildings, no overpacked frame, no muddy reflections",character:false,chips:["sale visual","sunrise flight","heart balloons","promo fantasy"],mechanics:["balloon-lift cargo display","airborne promo shipment","floating sale cube convoy","heart-buoy suspended load"],palettes:["ruby red and silver","crimson and champagne","valentine red and pearl","scarlet and sunrise gold"],moods:["celebratory","romantic commercial rush","heroic promo energy","festive spectacle"],cameras:["wide city-overflight shot","sunrise hero perspective","dramatic upward poster angle","cinematic aviation billboard framing"],lights:["golden sunrise backlight","soft winter dawn glow","commercial daylight with warm horizon","crisp reflective sunrise light"],finishes:["hyper-real commercial realism","cinematic aviation ad finish","premium 3D promo realism","high-polish billboard style"],defaults:{brand:"Love Lift Express",subject:"airplane carrying floating sale packages",product:"giant metallic discount cube with heart balloon lift",scene:"European-style city street at glowing sunrise",mechanic:"balloon-lift cargo display",palette:"ruby red and silver",mood:"festive spectacle",camera:"sunrise hero perspective",lighting:"golden sunrise backlight",finish:"hyper-real commercial realism",texture:"glossy aircraft paint, reflective metallic parcel wrapping, taut balloon strings, polished engine metal, crisp sunrise sheen",extras:"open skyline corridor, soft winter rooftops, bright promo mood, elegant aerial spacing"}},{id:"designer-bag-balloon",name:"04 · Designer Bag Balloon Over Paris",short:"Luxury bag hot-air balloon",style:"Playful luxury object surrealism with crisp daylight, bold color blocking, sculptural leather realism, iconic city backdrop, clean ad-space composition, and upscale travel-fashion polish.",base:"an oversized luxury handbag transformed into a hot-air balloon floating over Paris, sculptural leather realism, bright clean daylight, iconic skyline, playful upscale fashion fantasy, polished commercial composition",use:"Accessory campaigns, fashion postcards, travel-brand visuals, brand identity hero images, luxury object art.",negative:"no limp bag structure, no uneven stitching, no warped basket, no cluttered skyline, no muddy leather texture, no distorted tower silhouette",character:false,chips:["bag balloon","Paris skyline","object surrealism","luxury travel"],mechanics:["handbag hot-air balloon","floating fashion dirigible","elevated accessory display","designer object airship"],palettes:["cobalt blue and warm tan","deep navy and cream","royal blue and soft gold","azure and sunrise beige"],moods:["playful prestige","bright luxury adventure","clean upscale whimsy","fashion postcard fantasy"],cameras:["wide skyline fashion shot","elevated cityscape view","centered object hero framing","postcard-style vertical composition"],lights:["bright clean commercial daylight","soft golden city light","clear morning sun","crisp fashion-campaign daylight"],finishes:["polished luxury commercial realism","premium 3D object realism","clean editorial product realism","stylized travel-poster realism"],defaults:{brand:"Maison Ciel Bleu",subject:"oversized handbag hot-air balloon",product:"inflated sculptural leather tote with woven basket",scene:"clear Paris skyline with the Eiffel Tower in the distance",mechanic:"handbag hot-air balloon",palette:"cobalt blue and warm tan",mood:"fashion postcard fantasy",camera:"wide skyline fashion shot",lighting:"bright clean commercial daylight",finish:"polished luxury commercial realism",texture:"structured inflated leather, visible seams, matte basket weave, subtle hardware shine, crisp city depth",extras:"small matching bag balloons in background, airy skyline spacing, clean travel-ad clarity"}},{id:"croissant-heart-balloon",name:"05 · Croissant Heart Balloon Cart",short:"Floral balloon + pastry box",style:"Sweet surreal brand photography with bright daylight, floral texture realism, pastel product staging, charming travel-city backdrop, commercial clarity, and whimsical bakery-luxury fusion.",base:"a giant floral heart balloon lifting a pastel box filled with buttery croissants over a Paris boulevard, airy whimsical realism, bright romantic daylight, soft bakery luxury styling, clean commercial composition",use:"Bakery campaigns, brunch launches, Valentine promotions, café branding, charming city hero visuals.",negative:"no collapsed pastry texture, no sloppy balloon shape, no tangled support strings, no murky street detail, no muddy florals",character:false,chips:["bakery fantasy","heart balloon","Paris boulevard","soft romantic retail"],mechanics:["floral heart hot-air lift","romantic pastry air display","suspended gift-box gondola","floating bakery showcase"],palettes:["pink and buttercream","soft rose and sky blue","blush and pastry gold","cotton pink and cream"],moods:["sweet romantic","playful brunch luxury","cute airy charm","cheerful fantasy retail"],cameras:["wide boulevard campaign shot","slightly low whimsical angle","centered vertical food poster framing","hero street-corridor perspective"],lights:["bright spring daylight","soft morning sunshine","clean pastel daylight","sun-kissed airy glow"],finishes:["premium food-ad realism","clean surreal commercial realism","soft glossy product render","bright editorial bakery realism"],defaults:{brand:"Amour Croissant Club",subject:"heart balloon pastry lift",product:"pink box filled with golden croissants",scene:"romantic European boulevard under bright blue sky",mechanic:"floral heart hot-air lift",palette:"pink and buttercream",mood:"playful brunch luxury",camera:"hero street-corridor perspective",lighting:"bright spring daylight",finish:"premium food-ad realism",texture:"buttery flaky pastry layers, dense flower-petal balloon texture, pastel matte box surface, airy sky clarity",extras:"tiny floating hearts, long boulevard depth, clean romance campaign energy"}},{id:"cloud-boutique",name:"06 · Cloud Boutique Heart Balloon",short:"Floating shop in the clouds",style:"Minimal surreal fashion architecture with soft luxury light, elegant visual silence, cloudscape serenity, pastel romantic atmosphere, and clean premium brand-world composition.",base:"a minimalist floating boutique showroom suspended by a red heart balloon above a sea of clouds, soft pastel sky, serene luxury fashion fantasy, elegant modern retail design, cinematic dreamscape realism",use:"Boutique branding, capsule collection launches, romantic retail concepts, sky-high campaign art, fashion display posters.",negative:"no broken glass edges, no messy hanging garments, no uneven cloud rendering, no tangled support strings, no dull interior light",character:false,chips:["floating boutique","cloudscape","minimal retail","dream architecture"],mechanics:["heart-balloon boutique suspension","floating showroom pod","cloudborne fashion display","airborne retail pavilion"],palettes:["rose red and blush sky","soft pink and ivory","sunset blush and cream","dusty rose and cloud white"],moods:["serene luxury","gentle romantic minimalism","dream boutique calm","editorial fantasy stillness"],cameras:["wide floating architecture shot","centered minimalist composition","slightly low dreamy angle","editorial sky-display framing"],lights:["golden-hour cloud glow","soft sunset diffusion","clean boutique interior light","warm ambient sky light"],finishes:["cinematic architectural realism","premium retail render realism","soft editorial dream realism","minimal luxury concept-art finish"],defaults:{brand:"Cloudline Atelier",subject:"floating boutique showroom",product:"curated red and blush fashion pieces displayed in a glass retail pod",scene:"golden-hour cloudscape with soft pastel horizon",mechanic:"heart-balloon boutique suspension",palette:"sunset blush and cream",mood:"serene luxury",camera:"centered minimalist composition",lighting:"golden-hour cloud glow",finish:"cinematic architectural realism",texture:"clear polished glass, matte architectural frame, floating string tension, softly lit fabrics, plush layered clouds",extras:"minimal negative space, boutique-window stillness, elegant cloud shadows"}},{id:"lipstick-heart-display",name:"07 · Floral Heart Lip Display",short:"Heart balloon + lipstick trio",style:"Beauty-ad surrealism with clean product hero framing, soft pastel polish, glossy packaging realism, floral romantic symbolism, airy city elegance, and premium commercial finish.",base:"three soft matte lip products on a pastel display block beneath a giant floral heart balloon above a Paris avenue, luxury beauty advertising realism, clean feminine composition, romantic pastel styling, polished product focus",use:"Beauty product launches, lip collection ads, seasonal social promos, homepage hero art, soft feminine campaign design.",negative:"no misshapen bottles, no unreadable labels, no warped spray caps, no messy strings, no cluttered street backdrop, no dull product finish",character:false,chips:["beauty campaign","floral heart","Paris avenue","soft pink product hero"],mechanics:["floral balloon product lift","airborne beauty display","suspended pedestal showcase","romantic billboard float"],palettes:["soft blush and white","rose nude and cream","petal pink and sky blue","baby pink and pearl"],moods:["clean feminine luxury","romantic beauty dream","soft polished elegance","sweet premium charm"],cameras:["centered product hero framing","wide avenue billboard shot","slightly low beauty campaign angle","vertical e-commerce ad composition"],lights:["bright clean commercial daylight","soft pastel daylight","airy spring glow","gentle beauty-studio daylight"],finishes:["hyper-clean beauty ad realism","premium 3D packaging realism","soft editorial cosmetic realism","polished e-commerce campaign finish"],defaults:{brand:"Petale Studio",subject:"soft matte lip trio beneath floral heart balloon",product:"three blush-toned lip products on a pastel pedestal",scene:"elegant Paris-style avenue with soft daytime traffic",mechanic:"airborne beauty display",palette:"soft blush and white",mood:"clean feminine luxury",camera:"centered product hero framing",lighting:"gentle beauty-studio daylight",finish:"hyper-clean beauty ad realism",texture:"frosted product bottles, smooth matte labels, densely packed flower-balloon petals, crisp pedestal edges, airy city backdrop",extras:"tiny floating heart accents, polished packaging symmetry, luxury campaign spacing"}},{id:"claw-machine-bags",name:"08 · Pastel Bag Claw Machine",short:"Claw game handbag display",style:"Playful pastel product surrealism with toy-commercial precision, smooth plastic geometry, glossy leather accessories, clean color blocking, and ultra-neat premium kawaii display energy.",base:"a baby-blue claw machine filled with pink mini handbags while a chrome claw lifts one bag toward the viewer, playful luxury retail surrealism, clean pastel display realism, polished commercial composition",use:"Accessory launches, collectible-fashion visuals, kawaii luxury branding, playful retail ads, product-drop posters.",negative:"no broken claw parts, no warped machine walls, no muddy acrylic surfaces, no sagging handbag straps, no cluttered interior spacing",character:false,chips:["claw machine","mini bags","pastel retail","toy-display luxury"],mechanics:["claw-lift bag reveal","toy-vending luxury display","suspended handbag pickup","arcade-style retail showcase"],palettes:["baby blue and pink","powder blue and hot pink","cotton-candy blue and blush","pastel aqua and rose"],moods:["playful collectible luxury","cute polished charm","retail delight","soft commercial fun"],cameras:["front-on machine view","close hero retail framing","slightly low toy-display angle","centered collector-poster composition"],lights:["bright studio retail light","high-key pastel lighting","clean acrylic showroom glow","soft candy-commercial light"],finishes:["premium 3D retail render","glossy collectible realism","toy-commercial product realism","hyper-clean ad finish"],defaults:{brand:"Dolly Drop House",subject:"mini handbag claw-machine reveal",product:"pile of pink mini bags inside a pastel arcade claw machine",scene:"clean studio retail display with toy-store polish",mechanic:"claw-lift bag reveal",palette:"baby blue and pink",mood:"playful collectible luxury",camera:"front-on machine view",lighting:"bright studio retail light",finish:"glossy collectible realism",texture:"clear acrylic panels, chrome claw shine, puffy leather mini bags, smooth plastic framing, crisp pastel reflections",extras:"orderly bag pile, clean showcase spacing, premium toy-store display logic"}},{id:"heart-candy-claw",name:"09 · Heart Candy Claw Bag",short:"Glossy bag over heart candies",style:"Candy-coated luxury product surrealism with polished chrome detail, inflated heart textures, glossy leather ruching, saturated pink atmosphere, and premium collectible display aesthetics.",base:"a glossy red ruched mini bag suspended by a chrome claw above a sea of pink and red heart candies, candy-luxe product surrealism, saturated romantic atmosphere, polished retail realism, tactile glossy finish",use:"Valentine accessory launches, playful romance campaigns, luxury bag drops, seasonal promo stories, beauty-fashion crossover art.",negative:"no torn leather, no melted candy shapes, no broken claw structure, no muddy red tones, no dull highlights, no messy reflections",character:false,chips:["heart candy pile","claw display","glossy red bag","romance retail"],mechanics:["claw-lift handbag display","suspended candy-machine reveal","romantic arcade pickup","floating product claw capture"],palettes:["candy pink and lipstick red","cherry red and marshmallow pink","rose red and bubble blush","hot pink and ruby gloss"],moods:["sweet seductive luxe","playful romance","high-gloss valentine drama","cute collectible glam"],cameras:["tight vertical product shot","low-angle claw reveal","front-centered candy display framing","luxury campaign close-up"],lights:["glossy pink studio glow","soft candy-box lighting","romantic chrome highlight light","high-shine commercial light"],finishes:["high-gloss luxury realism","premium 3D candy render","romantic commercial product realism","saturated editorial retail finish"],defaults:{brand:"Rouge Arcade Maison",subject:"red mini bag claw reveal",product:"ruched glossy handbag above heart candies",scene:"pink candy-machine interior with romantic retail styling",mechanic:"claw-lift handbag display",palette:"candy pink and lipstick red",mood:"sweet seductive luxe",camera:"tight vertical product shot",lighting:"glossy pink studio glow",finish:"high-gloss luxury realism",texture:"ruched glossy leather, mirror chrome claw, inflated candy hearts, acrylic machine panels, soft reflective pink atmosphere",extras:"sparkling highlight points, transparent machine edges, luxury valentine display mood"}},{id:"snow-helicopter-cubes",name:"10 · Snow Helicopter Cube Drop",short:"Pink helicopter + snowy cubes",style:"High-clarity alpine surrealism with cool daylight, pastel product contrast, crisp snow texture, clean toy-commercial branding, and adventurous premium ad composition.",base:"a pastel pink helicopter carrying plush branded cubes through a dramatic snowy mountain canyon, high-clarity surreal advertising realism, cold alpine light, playful luxury contrast, cinematic action composition",use:"Winter campaigns, product drops, sports-luxe visuals, seasonal launches, playful logistics storytelling.",negative:"no broken rotor motion, no messy cube geometry, no muddy snow, no weak mountain detail, no floating artifacts, no flat action energy",character:false,chips:["winter drop","helicopter action","snow canyon","pink brand cubes"],mechanics:["helicopter cargo lift","alpine product drop","airborne soft-cube convoy","action aerial sling carry"],palettes:["icy blue and blush pink","snow white and candy pink","frost silver and pastel rose","glacier blue and soft cotton pink"],moods:["fresh thrill luxury","playful alpine energy","crisp branded adventure","cool surreal motion"],cameras:["dynamic low-angle action shot","wide alpine hero framing","cinematic chase perspective","vertical campaign action poster"],lights:["bright alpine daylight","crisp reflective snow light","clear mountain sun","cool high-altitude daylight"],finishes:["hyper-clean action realism","premium 3D commercial realism","cinematic cold-weather ad finish","stylized alpine poster realism"],defaults:{brand:"Ysense Alpine Drop",subject:"pink helicopter delivering plush product cubes",product:"soft branded pink cubes flying through snowy canyon",scene:"icy mountain pass under crisp blue sky",mechanic:"helicopter cargo lift",palette:"icy blue and blush pink",mood:"crisp branded adventure",camera:"dynamic low-angle action shot",lighting:"bright alpine daylight",finish:"hyper-clean action realism",texture:"smooth painted helicopter body, fluffy velvet-like cube texture, sparkling snow spray, hard icy cliff faces, bright cold air clarity",extras:"falling cube rhythm, suspended cable tension, avalanche mist burst, high-energy branded motion"}},{id:"balloon-shopping-bag",name:"11 · Balloon Shopping Bag Street Float",short:"Balloon cluster + branded bag",style:"Bright street-level commercial surrealism with cheerful crowd atmosphere, bold vertical perspective, event-launch visual language, clean bag branding, and candy-colored retail optimism.",base:"a white shopping bag marked with custom brand text floats above a colorful pedestrian street, lifted by a huge cluster of pink, lilac, and white balloons, cheerful retail launch energy, bright clean daylight, festive surreal realism, premium campaign composition",use:"Retail launches, brand reveal posts, event ads, shopping festival graphics, launch-day hero visuals.",negative:"no tangled balloon strings, no warped bag shape, no unreadable brand text, no muddy crowd blur, no weak sky color, no awkward perspective",character:false,chips:["balloon lift","street launch","custom brand","cheerful retail"],mechanics:["balloon-cluster lift","floating shopping-bag reveal","festival retail suspension","launch-day sky display"],palettes:["pink white and lilac","cotton candy multi-pastel","rose blush and soft violet","bubblegum pink and cloud white"],moods:["celebratory retail joy","bright launch-day excitement","playful street optimism","clean festive charm"],cameras:["ground-level hero perspective","wide pedestrian-street framing","upward launch-poster angle","centered vertical street campaign shot"],lights:["bright blue-sky daylight","clean summer sunlight","fresh commercial daylight","soft midday city light"],finishes:["bright commercial realism","premium 3D campaign realism","clean event-poster realism","stylized festive ad finish"],defaults:{brand:"Your Brand",subject:"balloon-lift shopping bag reveal",product:"white branded shopping bag carried by a giant balloon cluster",scene:"colorful pedestrian shopping street under bright blue sky",mechanic:"balloon-cluster lift",palette:"pink white and lilac",mood:"bright launch-day excitement",camera:"ground-level hero perspective",lighting:"bright blue-sky daylight",finish:"bright commercial realism",texture:"matte premium shopping bag paper, glossy latex balloons, cobblestone street detail, soft crowd depth, bright clean sky",extras:"distant matching balloon cluster, festive street crowd, launch-day celebration feel"}}];
+
+function generateRichFallbackOptions(label, countNeeded){
+  const adjectives = ["glossy","cinematic","premium","editorial","soft","bold","luminous","reflective","polished","luxury","dreamy","romantic","sleek","radiant","plush","refined","velvet","crystal","golden","iridescent"];
+  const nouns = {"brand":["atelier","house","studio","society","maison","label","collective","edition","gallery","boulevard","circle","club","archive","line","co."],"subject":["campaign moment","hero concept","surreal display","launch tableau","product fantasy","editorial reveal","ad-world scene","retail centerpiece","luxury story","visual narrative","poster setup","showcase moment"],"product":["hero object","statement piece","campaign centerpiece","display item","collector-style piece","luxury object","editorial product","premium focal item","signature object","showcase piece"],"scene":["skyline environment","editorial street","luxury backdrop","dreamscape setting","campaign corridor","display environment","architectural world","visual stage","surreal cityscape","showroom setting"],"texture":["material layering","surface finish","tactile detail","reflective treatment","luxe texture story","dimensional texture","surface richness","finish detail","material contrast","hero texture pass"],"extras":["story layer","campaign detail","atmospheric accent","editorial flourish","visual add-on","luxury cue","hero emphasis","depth layer","floating accent","composition detail"],"styling notes":["styling direction","editorial finish","luxury polish","campaign refinement","visual control","glam emphasis","commercial treatment","premium pass","hero read","finish cue"],"custom note":["creative note","art direction","scene note","campaign guidance","editorial note","polish direction","luxury reminder","composition cue","visual instruction","refinement cue"],"cast":["lead ensemble","editorial cast","hero talent","fashion grouping","campaign lineup","glam lineup","luxury cast","featured talent","hero figure group","runway cast"],"wardrobe":["styling direction","fashion story","runway look","editorial outfit concept","luxury wardrobe","campaign fit","designer look","couture treatment","fashion pass","silhouette story"],"beauty":["beauty direction","glam treatment","hair and makeup pass","editorial beauty story","radiant finish","luxury beauty cue","polished beauty concept","runway beauty detail","face card treatment","gloss finish"],"pose":["pose direction","movement cue","hero stance","editorial posture","runway attitude","campaign stance","motion suggestion","body language cue","heroic framing pose","glam movement"],"composition":["composition layout","poster framing","editorial arrangement","hero balance","visual structure","layout treatment","negative-space composition","campaign arrangement","scene architecture","focus balance"],"lens feel":["lens treatment","focus style","camera perspective","editorial lens mood","portrait compression","wide cinematic look","macro detail feel","fashion depth","campaign optic feel","visual lens pass"],"camera motion":["camera sweep","glide direction","tracking motion","cinematic move","orbit motion","hero reveal motion","movement pass","floating motion","shot movement","visual motion treatment"],"shadow":["shadow treatment","contrast shaping","light falloff","reflective shadow pass","soft shadow control","editorial shadow mood","form shadow story","ambient shadow treatment","shadow behavior","depth shadow cue"],"atmosphere":["atmospheric layer","glow treatment","mist effect","air shimmer","visual haze","ambient veil","soft diffusion","romantic atmosphere","editorial air quality","floating ambience"],"quality":["quality finish","hero detail pass","commercial polish","campaign precision","editorial realism","visual richness","premium output layer","clean finish","launch-grade polish","final render treatment"],"gender":["styling direction","presentation","fashion identity","luxury styling mode","editorial styling mode"],"ethnicity":["beauty reference","casting inspiration","identity direction","editorial identity cue"],"skin tone":["radiance","glow","complexion tone","undertone finish","editorial complexion"],"eye color":["eye tone","gaze color","iris detail","eye styling direction"],"hairstyle":["hair direction","editorial hair look","runway hair concept","sculpted hair treatment","glam hair cue"],"hair color":["hair tone","gloss tone","editorial shade","luxury color story","salon finish"],"lashes":["lash style","lash direction","editorial lash look","glam lash treatment"],"makeup":["makeup direction","beauty beat","editorial face look","glam face treatment","cosmetic finish"],"expression":["facial mood","hero expression","campaign emotion","runway face cue","editorial expression"],"body style":["silhouette","frame direction","editorial proportion","fashion shape","hero body styling"],"ornate elements":["ornament detail","accent finish","luxury trim","decorative cue","editorial embellishment"],"props":["prop direction","hero accessory","scene prop","editorial add-on","luxury item"],"women outfit":["dress concept","editorial outfit","runway ensemble","glam set","luxury look"],"women shoes":["shoe style","heel concept","fashion footwear","runway shoe","luxury footwear"],"women accessories":["accessory story","jewelry cue","fashion add-on","glam accessory","luxury detail"],"men outfit":["tailored look","editorial suit direction","runway fit","fashion ensemble","luxury styling"],"men shoes":["shoe style","footwear direction","runway shoe","polished footwear","luxury shoe"],"men accessories":["accessory detail","style add-on","editorial accessory","luxury finishing piece","fashion accent"],"identity notes":["identity guidance","recognition note","likeness instruction","facial continuity cue","anchor note"],"mechanics":["lift system","display rig","carry method","transport cue","reveal mechanism","suspension concept","hero delivery method","airlift setup","showcase function","presentation rig"],"palettes":["color story","tone pairing","palette mood","shade direction","campaign colors","hue blend","chromatic story","luxury palette","editorial palette","glam colorway"],"moods":["mood direction","campaign feeling","visual emotion","editorial vibe","luxury atmosphere","scene energy","tone setting","brand mood","romantic tone","hero mood"],"cameras":["camera framing","hero shot","poster angle","editorial view","wide perspective","campaign angle","framing direction","shot style","focus composition","hero viewpoint"],"lights":["lighting setup","light pass","illumination mood","editorial light","glow direction","hero light treatment","studio light feel","ambient light direction","campaign lighting","reflective light pass"],"finishes":["render finish","visual polish","realism treatment","commercial finish","editorial finish","campaign finish","hero finish","poster polish","premium finish","final treatment"]};
+  const useNouns = nouns[label] || ["direction","story","treatment","finish","style","mood","pass","detail","layer","concept","look","setup","cue","framing","polish"];
+  const out = [];
+  for(const adj of adjectives){ for(const noun of useNouns){ out.push(cleanText(`${adj} ${label} ${noun}`)); if(out.length >= countNeeded) return out; } }
+  return out.slice(0, countNeeded);
+}
+function exactOptions(base, extras, label){
+  const merged = [...new Set([...(base || []), ...(extras || [])].filter(Boolean).map(cleanText))];
+  if(merged.length < exactCount){ const needed = exactCount - merged.length; const filler = generateRichFallbackOptions(label, 400).filter(v => !merged.includes(v)).slice(0, needed); merged.push(...filler); }
+  return merged.slice(0, exactCount);
+}
+function conceptSpecificOptions(concept, key){
+  const existing = concept[key] || [];
+  const supplement = conceptExpansionSeeds[key] || [];
+  return exactOptions(existing, supplement, key);
+}
+const allConcepts = [noneConcept, ...concepts];
+allConcepts.forEach(concept=>{ concept.mechanics50 = conceptSpecificOptions(concept, "mechanics"); concept.palettes50 = conceptSpecificOptions(concept, "palettes"); concept.moods50 = conceptSpecificOptions(concept, "moods"); concept.cameras50 = conceptSpecificOptions(concept, "cameras"); concept.lights50 = conceptSpecificOptions(concept, "lights"); concept.finishes50 = conceptSpecificOptions(concept, "finishes"); });
+const globalMechanicPool = exactOptions(allConcepts.flatMap(c => c.mechanics50 || []), [], "mechanics");
+const globalPalettePool = exactOptions(allConcepts.flatMap(c => c.palettes50 || []), [], "palettes");
+const globalMoodPool = exactOptions(allConcepts.flatMap(c => c.moods50 || []), [], "moods");
+const globalCameraPool = exactOptions(allConcepts.flatMap(c => c.cameras50 || []), [], "cameras");
+const globalLightPool = exactOptions(allConcepts.flatMap(c => c.lights50 || []), [], "lights");
+const globalFinishPool = exactOptions(allConcepts.flatMap(c => c.finishes50 || []), [], "finishes");
+const exactBanks = {brand: exactOptions(sharedBanks.brand, [], "brand"),subject: exactOptions(sharedBanks.subject, [], "subject"),product: exactOptions(sharedBanks.product, [], "product"),scene: exactOptions(sharedBanks.scene, [], "scene"),texture: exactOptions(sharedBanks.texture, [], "texture"),extras: exactOptions(sharedBanks.extras, [], "extras"),stylingNotes: exactOptions(sharedBanks.stylingNotes, [], "styling notes"),customNote: exactOptions(sharedBanks.customNote, [], "custom note"),cast: exactOptions(sharedBanks.cast, [], "cast"),wardrobe: exactOptions(sharedBanks.wardrobe, [], "wardrobe"),beauty: exactOptions(sharedBanks.beauty, [], "beauty"),pose: exactOptions(sharedBanks.pose, [], "pose"),composition: exactOptions(sharedBanks.composition, [], "composition"),lensFeel: exactOptions(sharedBanks.lensFeel, [], "lens feel"),cameraMotion: exactOptions(sharedBanks.cameraMotion, [], "camera motion"),shadow: exactOptions(sharedBanks.shadow, [], "shadow"),atmosphere: exactOptions(sharedBanks.atmosphere, [], "atmosphere"),quality: exactOptions(sharedBanks.quality, [], "quality"),gender: exactOptions(sharedBanks.gender, ["androgynous luxe styling","feminine-forward styling","masculine-forward styling"], "gender"),ethnicity: exactOptions(sharedBanks.ethnicity, ["Afro-Caribbean","Mediterranean","Mixed Black and Latina","Mixed White and Latina","Southwest Asian","Afro-European"], "ethnicity"),skinTone: exactOptions(sharedBanks.skinTone, ["rosy fair","light warm honey","soft caramel beige","deep golden bronze","neutral mocha","warm almond"], "skin tone"),eyeColor: exactOptions(sharedBanks.eyeColor, ["rich chocolate brown","soft olive green","light amber gold","stormy blue gray","dark hazel brown"], "eye color"),hairstyle: exactOptions(sharedBanks.hairstyle, ["sleek side bun","long editorial braid","luxury layered curls","soft glam ponytail","voluminous side waves","structured runway bob"], "hairstyle"),hairColor: exactOptions(sharedBanks.hairColor, ["cool ash brown","gloss black cherry","soft caramel gold","icy platinum pearl","deep auburn brunette","warm honey bronze"], "hair color"),lashes: exactOptions(sharedBanks.lashes, ["ultra-gloss glam lashes","clean lifted editorial lashes","soft flutter glam lashes","defined luxury lashes"], "lashes"),makeup: exactOptions(sharedBanks.makeup, ["glass-skin luxury glam","rose-gold sculpted glam","soft glossy editorial glam","expensive clean beauty finish"], "makeup"),expression: exactOptions(sharedBanks.expression, ["soft luxury confidence","calm poised glamour","editorial side-eye","radiant premium smile"], "expression"),bodyStyle: exactOptions(sharedBanks.bodyStyle, ["curvy luxury silhouette","soft athletic editorial build","slender high-fashion frame","balanced glam proportions"], "body style"),ornate: exactOptions(sharedBanks.ornate, ["beaded glam trim","soft crystal scatter","pearl-lined accents","luxury ribbon details"], "ornate elements"),props: exactOptions(sharedBanks.props, ["decorative flower box","mini glossy vanity case","structured campaign prop","premium fashion parcel"], "props"),womenOutfit: exactOptions(sharedBanks.womenOutfit, ["luxury corset mini set","glossy runway gown","premium editorial co-ord","structured blazer mini"], "women outfit"),womenShoes: exactOptions(sharedBanks.womenShoes, ["sparkling slingback heels","glossy fashion boots","luxury platform sandals","crystal pointed heels"], "women shoes"),womenAccessories: exactOptions(sharedBanks.womenAccessories, ["glossy luxury belt","ornate cuff bracelet","premium statement ring set","editorial mini bag"], "women accessories"),menOutfit: exactOptions(sharedBanks.menOutfit, ["structured luxury overcoat set","sleek editorial suit","gloss-accent travel tailoring","modern premium runway set"], "men outfit"),menShoes: exactOptions(sharedBanks.menShoes, ["sleek fashion sneakers","luxury patent boots","clean premium loafers","polished editorial derbies"], "men shoes"),menAccessories: exactOptions(sharedBanks.menAccessories, ["premium leather weekender","structured bracelet stack","luxury ring set","editorial scarf detail"], "men accessories"),identityNotes: exactOptions(sharedBanks.identityNotes, ["keep the same recognizable person across all variations while changing styling only","preserve face shape, hairline, and identity while shifting fashion and scene details","maintain recognizable identity anchors and do not alter core features","keep facial proportions stable while changing outfit, beauty, and environment"], "identity notes"),displayHeadline: exactOptions(sharedBanks.displayHeadline, ["Pearlline","Luxe Motion","Glam Arrival","Petal Drop"], "display headline"),displayTagline: exactOptions(sharedBanks.displayTagline, ["Styled to steal the scene","Luxury in full motion","Built for the spotlight","A fantasy your brand can wear"], "display tagline"),headlinePlacement: sharedBanks.headlinePlacement,taglinePlacement: sharedBanks.taglinePlacement,textStyle: exactOptions(sharedBanks.textStyle, ["sleek cinematic headline with minimalist tagline","runway-style headline with polished footer tagline"], "text style"),typographyEffects: sharedBanks.typographyEffects,transportType: transportTypeOptions,transportAesthetic: transportAestheticOptions,transportFunction: transportFunctionOptions,transportMotion: transportMotionOptions,transportScale: transportScaleOptions};
+function build15Presets(concept){ const labels = ["Signature Luxe","Editorial Shift","Glow Campaign","Poster Drama","Airy Prestige","Launch-Day Shine","Velvet Contrast","Gloss Bloom","Dream Retail","Hero Object Focus","Luxury Motion","Skyline Lift","Soft Fantasy","Premium Clarity","Campaign Finale"]; return labels.map((label, i) => ({label,values:{palette:(concept.id === "none-concept" ? globalPalettePool : concept.palettes50)[i % 50],mood:(concept.id === "none-concept" ? globalMoodPool : concept.moods50)[i % 50],camera:(concept.id === "none-concept" ? globalCameraPool : concept.cameras50)[i % 50],lighting:(concept.id === "none-concept" ? globalLightPool : concept.lights50)[i % 50],finish:(concept.id === "none-concept" ? globalFinishPool : concept.finishes50)[i % 50],mechanic:(concept.id === "none-concept" ? globalMechanicPool : concept.mechanics50)[i % 50],composition:exactBanks.composition[i % exactBanks.composition.length],lensFeel:exactBanks.lensFeel[i % exactBanks.lensFeel.length],cameraMotion:exactBanks.cameraMotion[i % exactBanks.cameraMotion.length],shadow:exactBanks.shadow[i % exactBanks.shadow.length],atmosphere:exactBanks.atmosphere[i % exactBanks.atmosphere.length],quality:exactBanks.quality[i % exactBanks.quality.length],stylingNotes:exactBanks.stylingNotes[i % exactBanks.stylingNotes.length],customNote:exactBanks.customNote[i % exactBanks.customNote.length]}})); }
+allConcepts.forEach(c => c.presets = build15Presets(c));
+const $ = id => document.getElementById(id);
+const dom = {conceptGrid:$("conceptGrid"),styleText:$("styleText"),presetRow:$("presetRow"),status:$("status"),historySection:$("historySection"),historyList:$("historyList"),photoOutput:$("photoOutput"),videoOutput:$("videoOutput"),photoTabs:$("photoTabs"),videoTabs:$("videoTabs"),photoVariationNote:$("photoVariationNote"),videoVariationNote:$("videoVariationNote"),characterModeSwitch:$("characterModeSwitch"),identityLockSwitch:$("identityLockSwitch"),womenPanel:$("womenPanel"),menPanel:$("menPanel")};
+const fields = {brand:$("brand"),subject:$("subject"),product:$("product"),scene:$("scene"),mechanic:$("mechanic"),palette:$("palette"),texture:$("texture"),extras:$("extras"),displayHeadline:$("displayHeadline"),displayTagline:$("displayTagline"),headlinePlacement:$("headlinePlacement"),taglinePlacement:$("taglinePlacement"),textStyle:$("textStyle"),typographyEffects:$("typographyEffects"),mood:$("mood"),camera:$("camera"),lighting:$("lighting"),finish:$("finish"),composition:$("composition"),lensFeel:$("lensFeel"),cameraMotion:$("cameraMotion"),shadow:$("shadow"),atmosphere:$("atmosphere"),quality:$("quality"),stylingNotes:$("stylingNotes"),customNote:$("customNote"),transportType:$("transportType"),transportAesthetic:$("transportAesthetic"),transportFunction:$("transportFunction"),transportMotion:$("transportMotion"),transportScale:$("transportScale"),cast:$("cast"),wardrobe:$("wardrobe"),beauty:$("beauty"),pose:$("pose"),gender:$("gender"),ethnicity:$("ethnicity"),skinTone:$("skinTone"),eyeColor:$("eyeColor"),hairstyle:$("hairstyle"),hairColor:$("hairColor"),lashes:$("lashes"),makeup:$("makeup"),expression:$("expression"),bodyStyle:$("bodyStyle"),ornate:$("ornate"),props:$("props"),womenOutfit:$("womenOutfit"),womenShoes:$("womenShoes"),womenAccessories:$("womenAccessories"),menOutfit:$("menOutfit"),menShoes:$("menShoes"),menAccessories:$("menAccessories"),identityNotes:$("identityNotes")};
+const fieldKeys = Object.keys(fields);
+const identityAnchorFields = ["gender","ethnicity","skinTone","eyeColor","bodyStyle","cast","identityNotes"];
+const state = {currentId: concepts[0].id,history: loadJSON("luxurySurrealPromptHistoryV50", []),locks: loadJSON("luxurySurrealLocksV50", {}),characterMode:true,identityLock:true,outputs:{photo:[],video:[],photoIndex:0,videoIndex:0,notes:[]},activePresetIndex:null,customTexts: loadJSON("luxurySurrealCustomTextsV50", {})};
+function saveLocks(){ saveJSON("luxurySurrealLocksV50", state.locks); }
+function saveHistory(){ saveJSON("luxurySurrealPromptHistoryV50", state.history.slice(0,18)); }
+function saveCustomTexts(){ saveJSON("luxurySurrealCustomTextsV50", state.customTexts); }
+function isLocked(k){ return !!state.locks[k]; }
+function setStatus(msg){ dom.status.textContent = msg; clearTimeout(setStatus.t); setStatus.t = setTimeout(() => dom.status.textContent = "", 2400); }
+function getCurrentConcept(){ return allConcepts.find(c => c.id === state.currentId) || concepts[0]; }
+function isCharacterEnabled(){ return state.characterMode || !!getCurrentConcept().character; }
+function applyGlobalSelects(){ populateSelect(fields.composition, exactBanks.composition); populateSelect(fields.lensFeel, exactBanks.lensFeel); populateSelect(fields.cameraMotion, exactBanks.cameraMotion); populateSelect(fields.shadow, exactBanks.shadow); populateSelect(fields.atmosphere, exactBanks.atmosphere); populateSelect(fields.quality, exactBanks.quality); populateSelect(fields.transportType, exactBanks.transportType); populateSelect(fields.transportAesthetic, exactBanks.transportAesthetic); populateSelect(fields.transportFunction, exactBanks.transportFunction); populateSelect(fields.transportMotion, exactBanks.transportMotion); populateSelect(fields.transportScale, exactBanks.transportScale); populateSelect(fields.gender, exactBanks.gender); populateSelect(fields.ethnicity, exactBanks.ethnicity); populateSelect(fields.skinTone, exactBanks.skinTone); populateSelect(fields.eyeColor, exactBanks.eyeColor); populateSelect(fields.hairstyle, exactBanks.hairstyle); populateSelect(fields.hairColor, exactBanks.hairColor); populateSelect(fields.lashes, exactBanks.lashes); populateSelect(fields.makeup, exactBanks.makeup); populateSelect(fields.expression, exactBanks.expression); populateSelect(fields.bodyStyle, exactBanks.bodyStyle); populateSelect(fields.ornate, exactBanks.ornate); populateSelect(fields.props, exactBanks.props); populateSelect(fields.womenOutfit, exactBanks.womenOutfit); populateSelect(fields.womenShoes, exactBanks.womenShoes); populateSelect(fields.womenAccessories, exactBanks.womenAccessories); populateSelect(fields.menOutfit, exactBanks.menOutfit); populateSelect(fields.menShoes, exactBanks.menShoes); populateSelect(fields.menAccessories, exactBanks.menAccessories); populateSelect(fields.headlinePlacement, exactBanks.headlinePlacement); populateSelect(fields.taglinePlacement, exactBanks.taglinePlacement); populateSelect(fields.textStyle, exactBanks.textStyle); }
+function bindConceptOptions(){ const concept = getCurrentConcept(); const mechanics = concept.id === "none-concept" ? globalMechanicPool : concept.mechanics50; const palettes = concept.id === "none-concept" ? globalPalettePool : concept.palettes50; const moods = concept.id === "none-concept" ? globalMoodPool : concept.moods50; const cameras = concept.id === "none-concept" ? globalCameraPool : concept.cameras50; const lights = concept.id === "none-concept" ? globalLightPool : concept.lights50; const finishes = concept.id === "none-concept" ? globalFinishPool : concept.finishes50; populateSelect(fields.mechanic, mechanics); populateSelect(fields.palette, palettes); populateSelect(fields.mood, moods); populateSelect(fields.camera, cameras); populateSelect(fields.lighting, lights); populateSelect(fields.finish, finishes); }
+function setLockVisual(k){ const btn = document.querySelector(`.lock-btn[data-lock="${k}"]`); if(!btn) return; btn.classList.toggle("locked", isLocked(k)); btn.textContent = isLocked(k) ? "Locked" : "Unlock"; }
+function setAllLockVisuals(){ fieldKeys.forEach(setLockVisual); }
+function getValue(key){ return fields[key] ? cleanText(fields[key].value) : ""; }
+function setValue(key, value, force=false){ if(!fields[key]) return; if(!force && isLocked(key)) return; if(fields[key].tagName === "SELECT") ensureSelectOption(fields[key], value); fields[key].value = value ?? ""; }
+function getCustomText(key){ return cleanText(state.customTexts[key] || ""); }
+function setCustomText(key, value){ state.customTexts[key] = cleanText(value || ""); saveCustomTexts(); const area = document.querySelector(`[data-custom-input-for="${key}"]`); if(area && area.value !== (value || "")) area.value = value || ""; const toggle = document.querySelector(`[data-custom-toggle-for="${key}"]`); if(toggle) toggle.classList.toggle("active-custom", !!cleanText(value || "")); }
+function getAugmentedValue(key){ return joinParts([getValue(key), getCustomText(key)]); }
+function collectForm(){ const out = {}; fieldKeys.forEach(k => out[k] = getValue(k)); return out; }
+function collectCustomTexts(){ const out = {}; fieldKeys.forEach(k => { if(getCustomText(k)) out[k] = getCustomText(k); }); return out; }
+function syncCharacterPanels(){ const gender = getValue("gender"); const enabled = isCharacterEnabled(); $("characterSection").style.display = enabled ? "block" : "none"; dom.characterModeSwitch.classList.toggle("active", state.characterMode); dom.identityLockSwitch.classList.toggle("active", state.identityLock); dom.womenPanel.classList.toggle("disabled", !enabled || gender === "men"); dom.menPanel.classList.toggle("disabled", !enabled || gender === "women"); }
+function updateHero(){ const concept = getCurrentConcept(); dom.styleText.textContent = concept.style; }
+function renderConceptGrid(){ dom.conceptGrid.innerHTML = ""; allConcepts.forEach(c => { const btn = document.createElement("button"); btn.type = "button"; btn.className = "concept-card" + (c.id === "none-concept" ? " none-choice" : "") + (state.currentId === c.id ? " active" : ""); const badge = c.id === "none-concept" ? `<span class="concept-badge">None / Free Build</span>` : ""; btn.innerHTML = `${badge}<strong>${c.name}</strong><small>${c.short}</small>`; btn.addEventListener("click", () => { state.currentId = c.id; state.activePresetIndex = null; bindConceptOptions(); if(c.id !== "none-concept"){ loadBaseDefaults(); } renderConceptGrid(); renderPresetRow(); updateHero(); syncCharacterPanels(); setStatus(c.id === "none-concept" ? "Free build mode on." : "Concept switched."); }); dom.conceptGrid.appendChild(btn); }); }
+function loadBaseDefaults(){ const concept = getCurrentConcept(); const defaults = concept.defaults || {}; Object.entries(defaults).forEach(([k,v]) => setValue(k,v)); if(!getValue("composition")) setValue("composition", exactBanks.composition[0]); if(!getValue("lensFeel")) setValue("lensFeel", exactBanks.lensFeel[1]); if(!getValue("cameraMotion")) setValue("cameraMotion", exactBanks.cameraMotion[0]); if(!getValue("shadow")) setValue("shadow", exactBanks.shadow[0]); if(!getValue("atmosphere")) setValue("atmosphere", exactBanks.atmosphere[1]); if(!getValue("quality")) setValue("quality", exactBanks.quality[0]); if(!getValue("stylingNotes")) setValue("stylingNotes", exactBanks.stylingNotes[0]); if(!getValue("customNote")) setValue("customNote", exactBanks.customNote[0]); if(!getValue("transportType")) setValue("transportType", exactBanks.transportType[0]); if(!getValue("transportAesthetic")) setValue("transportAesthetic", exactBanks.transportAesthetic[0]); if(!getValue("transportFunction")) setValue("transportFunction", exactBanks.transportFunction[0]); if(!getValue("transportMotion")) setValue("transportMotion", exactBanks.transportMotion[0]); if(!getValue("transportScale")) setValue("transportScale", exactBanks.transportScale[4]); if(!getValue("cast")) setValue("cast", exactBanks.cast[0]); if(!getValue("wardrobe")) setValue("wardrobe", exactBanks.wardrobe[0]); if(!getValue("beauty")) setValue("beauty", exactBanks.beauty[0]); if(!getValue("pose")) setValue("pose", exactBanks.pose[0]); if(!getValue("gender")) setValue("gender", exactBanks.gender[0]); if(!getValue("ethnicity")) setValue("ethnicity", exactBanks.ethnicity[0]); if(!getValue("skinTone")) setValue("skinTone", exactBanks.skinTone[0]); if(!getValue("eyeColor")) setValue("eyeColor", exactBanks.eyeColor[0]); if(!getValue("hairstyle")) setValue("hairstyle", exactBanks.hairstyle[0]); if(!getValue("hairColor")) setValue("hairColor", exactBanks.hairColor[0]); if(!getValue("lashes")) setValue("lashes", exactBanks.lashes[0]); if(!getValue("makeup")) setValue("makeup", exactBanks.makeup[0]); if(!getValue("expression")) setValue("expression", exactBanks.expression[0]); if(!getValue("bodyStyle")) setValue("bodyStyle", exactBanks.bodyStyle[0]); if(!getValue("ornate")) setValue("ornate", exactBanks.ornate[0]); if(!getValue("props")) setValue("props", exactBanks.props[0]); if(!getValue("womenOutfit")) setValue("womenOutfit", exactBanks.womenOutfit[0]); if(!getValue("womenShoes")) setValue("womenShoes", exactBanks.womenShoes[0]); if(!getValue("womenAccessories")) setValue("womenAccessories", exactBanks.womenAccessories[0]); if(!getValue("menOutfit")) setValue("menOutfit", exactBanks.menOutfit[0]); if(!getValue("menShoes")) setValue("menShoes", exactBanks.menShoes[0]); if(!getValue("menAccessories")) setValue("menAccessories", exactBanks.menAccessories[0]); if(!getValue("identityNotes")) setValue("identityNotes", exactBanks.identityNotes[0]); syncCharacterPanels(); }
+function renderPresetRow(){ const concept = getCurrentConcept(); dom.presetRow.innerHTML = ""; concept.presets.forEach((preset, index) => { const btn = document.createElement("button"); btn.type = "button"; btn.className = "preset-btn" + (state.activePresetIndex === index ? " active-preset" : ""); btn.textContent = preset.label; btn.addEventListener("click", () => { Object.entries(preset.values).forEach(([k,v]) => setValue(k,v)); state.activePresetIndex = index; renderPresetRow(); syncCharacterPanels(); setStatus(`Loaded ${preset.label}.`); }); dom.presetRow.appendChild(btn); }); }
+function fieldOptionBank(key){ const concept = getCurrentConcept(); const conceptOrGlobal = (specific, global) => concept.id === "none-concept" ? global : specific; const map = {brand: exactBanks.brand,subject: exactBanks.subject,product: exactBanks.product,scene: exactBanks.scene,mechanic: conceptOrGlobal(concept.mechanics50, globalMechanicPool),palette: conceptOrGlobal(concept.palettes50, globalPalettePool),displayHeadline: exactBanks.displayHeadline,displayTagline: exactBanks.displayTagline,headlinePlacement: exactBanks.headlinePlacement,taglinePlacement: exactBanks.taglinePlacement,textStyle: exactBanks.textStyle,typographyEffects: exactBanks.typographyEffects,mood: conceptOrGlobal(concept.moods50, globalMoodPool),camera: conceptOrGlobal(concept.cameras50, globalCameraPool),lighting: conceptOrGlobal(concept.lights50, globalLightPool),finish: conceptOrGlobal(concept.finishes50, globalFinishPool),texture: exactBanks.texture,extras: exactBanks.extras,composition: exactBanks.composition,lensFeel: exactBanks.lensFeel,cameraMotion: exactBanks.cameraMotion,shadow: exactBanks.shadow,atmosphere: exactBanks.atmosphere,quality: exactBanks.quality,stylingNotes: exactBanks.stylingNotes,customNote: exactBanks.customNote,transportType: exactBanks.transportType,transportAesthetic: exactBanks.transportAesthetic,transportFunction: exactBanks.transportFunction,transportMotion: exactBanks.transportMotion,transportScale: exactBanks.transportScale,cast: exactBanks.cast,wardrobe: exactBanks.wardrobe,beauty: exactBanks.beauty,pose: exactBanks.pose,gender: exactBanks.gender,ethnicity: exactBanks.ethnicity,skinTone: exactBanks.skinTone,eyeColor: exactBanks.eyeColor,hairstyle: exactBanks.hairstyle,hairColor: exactBanks.hairColor,lashes: exactBanks.lashes,makeup: exactBanks.makeup,expression: exactBanks.expression,bodyStyle: exactBanks.bodyStyle,ornate: exactBanks.ornate,props: exactBanks.props,womenOutfit: exactBanks.womenOutfit,womenShoes: exactBanks.womenShoes,womenAccessories: exactBanks.womenAccessories,menOutfit: exactBanks.menOutfit,menShoes: exactBanks.menShoes,menAccessories: exactBanks.menAccessories,identityNotes: exactBanks.identityNotes}; return map[key] || []; }
+function injectCustomTextControls(){ document.querySelectorAll(".field").forEach(fieldEl => { const target = fieldEl.querySelector("input[id], select[id], textarea[id]"); if(!target) return; if(fieldEl.querySelector(`[data-custom-wrap-for="${target.id}"]`)) return; const wrap = document.createElement("div"); wrap.className = "custom-text-wrap hidden"; wrap.setAttribute("data-custom-wrap-for", target.id); const area = document.createElement("textarea"); area.className = "custom-text-area"; area.placeholder = "Add custom text for this category..."; area.setAttribute("data-custom-input-for", target.id); area.value = state.customTexts[target.id] || ""; area.addEventListener("input", () => { setCustomText(target.id, area.value); }); wrap.appendChild(area); const btn = document.createElement("button"); btn.type = "button"; btn.className = "custom-toggle-btn" + (getCustomText(target.id) ? " active-custom" : ""); btn.textContent = "Custom Text"; btn.setAttribute("data-custom-toggle-for", target.id); btn.addEventListener("click", () => { wrap.classList.toggle("hidden"); btn.classList.toggle("active-custom", !wrap.classList.contains("hidden") || !!getCustomText(target.id)); }); fieldEl.appendChild(btn); fieldEl.appendChild(wrap); if(getCustomText(target.id)){ wrap.classList.remove("hidden"); btn.classList.add("active-custom"); } }); }
+
+const typographyEffectRules = {
+  max:2,
+  exclusive:[['hollow outline','glass glossy','chrome metallic','foil stamped'],['embossed','debossed'],['neon glow','soft blur glow']],
+  friendly:{
+    'bold':['shadowed','beveled','foil stamped','3D extruded'],
+    'hollow outline':['shadowed','neon glow','chrome metallic'],
+    '3D extruded':['chrome metallic','shadowed','beveled'],
+    'chrome metallic':['beveled','shadowed','3D extruded'],
+    'glass glossy':['shadowed','soft blur glow'],
+    'neon glow':['hollow outline','shadowed'],
+    'embossed':['foil stamped','shadowed'],
+    'debossed':['shadowed'],
+    'shadowed':['bold','hollow outline','3D extruded','chrome metallic','glass glossy','embossed','debossed','foil stamped'],
+    'beveled':['bold','3D extruded','chrome metallic'],
+    'foil stamped':['bold','embossed','shadowed'],
+    'soft blur glow':['glass glossy','neon glow']
+  }
+};
+function getTypographyEffects(){ return String(getValue('typographyEffects') || '').split('|').map(v => cleanText(v)).filter(Boolean); }
+function setTypographyEffects(values, silent=false){ const cleaned = [...new Set((values || []).map(v => cleanText(v)).filter(Boolean))].slice(0, typographyEffectRules.max); setValue('typographyEffects', cleaned.join('|'), true); document.querySelectorAll('.effect-chip').forEach(btn => btn.classList.toggle('active', cleaned.includes(btn.dataset.value))); if(!silent) setStatus(cleaned.length ? `Typography effects set: ${cleaned.join(', ')}.` : 'Typography effects cleared.'); }
+function canPairEffect(next, chosen){ for(const group of typographyEffectRules.exclusive){ if(group.includes(next) && chosen.some(v => group.includes(v))) return false; } return chosen.every(v => (typographyEffectRules.friendly[v] || []).includes(next) || (typographyEffectRules.friendly[next] || []).includes(v)); }
+function randomizeTypographyEffects(){ if(isLocked('typographyEffects')) return; const pool = exactBanks.typographyEffects || []; if(!pool.length) return; const first = choice(pool); let chosen=[first]; if(Math.random() > .45){ const secondPool = pool.filter(v => v !== first && canPairEffect(v, chosen)); if(secondPool.length) chosen.push(choice(secondPool)); } setTypographyEffects(chosen, true); }
+function renderTypographyEffects(){ const grid = $('typographyEffectsGrid'); if(!grid) return; grid.innerHTML=''; (exactBanks.typographyEffects || []).forEach(effect => { const btn = document.createElement('button'); btn.type='button'; btn.className='effect-chip'; btn.dataset.value=effect; btn.textContent=effect; btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); if(isLocked('typographyEffects')) return; const current = getTypographyEffects(); const active = current.includes(effect); if(active){ setTypographyEffects(current.filter(v => v !== effect), true); return; } if(current.length >= typographyEffectRules.max) return setStatus('Typography effects max is 2.'); if(current.length && !canPairEffect(effect, current)) return setStatus('That combo fights the current effect choice.'); setTypographyEffects([...current, effect], true); }); grid.appendChild(btn); }); setTypographyEffects(getTypographyEffects(), true); }
+function upscaleCurrentOutputs(){ if(!state.outputs.photo.length && !state.outputs.video.length) return setStatus('Generate prompts first, then upscale them.'); const up = 'upscaled ultra-detailed finish, sharper textural clarity, cleaner edges, refined lighting separation, enhanced premium realism'; state.outputs.photo = state.outputs.photo.map(t => t.includes('upscaled ultra-detailed finish') ? t : cleanText(joinParts([t, up]))); state.outputs.video = state.outputs.video.map(t => t.includes('upscaled ultra-detailed finish') ? t : cleanText(joinParts([t, 'high-resolution upscale pass, cleaner motion detail, sharper luxury finish']))); renderOutputs(); setStatus('Upscale layer added to photo and video prompts.'); }
+function randomizeField(key){ if(key === "typographyEffects") return randomizeTypographyEffects(); if(isLocked(key)) return; const options = fieldOptionBank(key); if(!options.length) return; setValue(key, choice(options)); syncCharacterPanels(); }
+function clearCurrentTab(){ const targets = fieldKeys.slice(); targets.forEach(k => { setValue(k, "", true); setCustomText(k, ""); }); if(isCharacterEnabled()){ ensureSelectOption(fields.gender, "women"); fields.gender.value = "women"; } setTypographyEffects([], true); clearOutputs(); syncCharacterPanels(); setStatus("Current tab cleared."); }
+function clearOutputs(){ state.outputs = {photo:[],video:[],notes:[],photoIndex:0,videoIndex:0}; renderOutputs(); }
+function randomizeAll(){ ["brand","subject","product","scene","mechanic","palette","texture","extras","displayHeadline","displayTagline","headlinePlacement","taglinePlacement","textStyle","typographyEffects","mood","camera","lighting","finish","composition","lensFeel","cameraMotion","shadow","atmosphere","quality","stylingNotes","customNote","transportType","transportAesthetic","transportFunction","transportMotion","transportScale"].forEach(randomizeField); if(isCharacterEnabled()){ if(!isLocked("gender")) setValue("gender", choice(exactBanks.gender)); const gender = getValue("gender"); ["cast","wardrobe","beauty","pose","ethnicity","skinTone","eyeColor","hairstyle","hairColor","lashes","makeup","expression","bodyStyle","ornate","props","identityNotes"].forEach(randomizeField); if(gender === "women"){ ["womenOutfit","womenShoes","womenAccessories"].forEach(randomizeField); ["menOutfit","menShoes","menAccessories"].forEach(k => setValue(k, "", true)); }else if(gender === "men"){ ["menOutfit","menShoes","menAccessories"].forEach(randomizeField); ["womenOutfit","womenShoes","womenAccessories"].forEach(k => setValue(k, "", true)); }else{ ["womenOutfit","womenShoes","womenAccessories","menOutfit","menShoes","menAccessories"].forEach(randomizeField); } }else{ ["cast","wardrobe","beauty","pose","gender","ethnicity","skinTone","eyeColor","hairstyle","hairColor","lashes","makeup","expression","bodyStyle","ornate","props","womenOutfit","womenShoes","womenAccessories","menOutfit","menShoes","menAccessories","identityNotes"].forEach(k => setValue(k, "", true)); } syncCharacterPanels(); state.activePresetIndex = null; renderPresetRow(); setStatus("Randomized."); }
+function buildTransportDetails(data){ if(!data.transportType && !data.transportAesthetic && !data.transportFunction && !data.transportMotion && !data.transportScale) return ""; return joinParts([data.transportScale,data.transportAesthetic,data.transportType,data.transportFunction,data.transportMotion]); }
+function buildBrandTextDetails(data){ if(!data.displayHeadline && !data.displayTagline) return ""; const effects = String(data.typographyEffects || "").split("|").map(v => cleanText(v)).filter(Boolean).join(", "); return joinParts([data.displayHeadline ? `headline text: ${data.displayHeadline}` : "",data.displayTagline ? `tagline text: ${data.displayTagline}` : "",data.headlinePlacement ? `headline placement: ${data.headlinePlacement}` : "",data.displayTagline && data.taglinePlacement ? `tagline placement: ${data.taglinePlacement}` : "",(data.displayHeadline || data.displayTagline) && data.textStyle ? `text styling: ${data.textStyle}` : "",effects ? `typography effects: ${effects}` : "","include elegant readable brand typography integrated into the composition"]); }
+function buildCharacterDetails(data, mode){ if(!isCharacterEnabled()) return ""; const gender = data.gender; const womenBits = joinParts([data.womenOutfit,data.womenShoes,data.womenAccessories]); const menBits = joinParts([data.menOutfit,data.menShoes,data.menAccessories]); const styleByGender = gender === "women" ? womenBits : gender === "men" ? menBits : joinParts([womenBits, menBits]); return joinParts([data.cast,`${gender || "character"} styling`,data.ethnicity,data.skinTone,data.eyeColor ? `${data.eyeColor} eyes` : "",data.hairstyle,data.hairColor,data.lashes,data.makeup,data.expression,data.bodyStyle,data.ornate,styleByGender,data.props,data.wardrobe,data.beauty,data.pose,buildTransportDetails(data) ? `interacting with ${buildTransportDetails(data)}` : "",mode === "photo" ? "clear premium character readability" : "clear action-aware character readability",data.identityNotes]); }
+function variationClone(base, index){ const clone = JSON.parse(JSON.stringify(base)); const alt = key => { const opts = fieldOptionBank(key).filter(v => v && v !== clone[key]); if(opts.length) clone[key] = choice(opts); }; ["camera","lighting","mood","composition","lensFeel","cameraMotion","shadow","atmosphere","quality","stylingNotes"].forEach(alt); if(index === 1){ ["scene","palette","finish","transportAesthetic","transportMotion"].forEach(alt); } if(index === 2){ ["scene","palette","finish","mechanic","transportType","transportFunction","transportMotion","transportScale"].forEach(alt); } if(isCharacterEnabled()){ const protectedKeys = state.identityLock ? identityAnchorFields : []; ["hairstyle","hairColor","makeup","expression","pose","wardrobe","beauty","props","ornate"].forEach(k => { if(!protectedKeys.includes(k)) alt(k); }); if(clone.gender === "women"){ alt("womenOutfit"); alt("womenShoes"); alt("womenAccessories"); clone.menOutfit = ""; clone.menShoes = ""; clone.menAccessories = ""; }else if(clone.gender === "men"){ alt("menOutfit"); alt("menShoes"); alt("menAccessories"); clone.womenOutfit = ""; clone.womenShoes = ""; clone.womenAccessories = ""; } } return clone; }
+function buildAugmentedData(base){ const out = {}; fieldKeys.forEach(k => out[k] = getAugmentedValue(k)); return Object.assign({}, base, out); }
+function buildPhotoPrompt(data, index){ const concept = getCurrentConcept(); const conceptBase = concept.id === "none-concept" ? "" : concept.base; const conceptNegative = concept.id === "none-concept" ? "" : concept.negative; return cleanText(joinParts([conceptBase,data.brand ? `brand world: ${data.brand}` : "",buildBrandTextDetails(data),data.subject,data.product,data.scene,data.mechanic,buildTransportDetails(data),data.palette,data.mood,buildCharacterDetails(data, "photo"),data.texture,data.extras,data.stylingNotes,data.customNote,data.camera,data.composition,data.lensFeel,data.lighting,data.shadow,data.atmosphere,data.finish,data.quality,"premium campaign image, polished commercial realism, clean copy-ready prompt, strong hero focus",`variation ${index + 1}`,conceptNegative])); }
+function buildVideoPrompt(data, index){ const concept = getCurrentConcept(); const conceptBase = concept.id === "none-concept" ? "" : concept.base; const conceptNegative = concept.id === "none-concept" ? "" : concept.negative; return cleanText(joinParts(["cinematic video prompt",conceptBase,data.brand ? `brand world: ${data.brand}` : "",buildBrandTextDetails(data),data.subject,data.product,data.scene,data.mechanic,buildTransportDetails(data),data.cameraMotion,"visible cinematic motion","clear shot progression",data.palette,data.mood,buildCharacterDetails(data, "video"),data.texture,data.extras,data.stylingNotes,data.customNote,data.camera,data.composition,data.lensFeel,data.lighting,data.shadow,data.atmosphere,data.finish,data.quality,"natural motion detail, premium camera choreography, luxury ad film energy, polished commercial realism",`variation ${index + 1}`,conceptNegative])); }
+function renderVariationTabs(container, items, activeIndex, clickHandler){ container.innerHTML = ""; items.forEach((_, i) => { const btn = document.createElement("button"); btn.type = "button"; btn.className = "tab-btn" + (i === activeIndex ? " active" : ""); btn.textContent = `Variation ${i + 1}`; btn.addEventListener("click", () => clickHandler(i)); container.appendChild(btn); }); }
+function renderOutputs(){ const photoIndex = state.outputs.photoIndex || 0; const videoIndex = state.outputs.videoIndex || 0; dom.photoOutput.textContent = state.outputs.photo[photoIndex] || "Your photo prompts will appear here."; dom.videoOutput.textContent = state.outputs.video[videoIndex] || "Your video prompts will appear here."; dom.photoVariationNote.textContent = state.outputs.notes?.[photoIndex] || "Variation notes will appear here after generation."; dom.videoVariationNote.textContent = state.outputs.notes?.[videoIndex] || "Variation notes will appear here after generation."; renderVariationTabs(dom.photoTabs, state.outputs.photo || [], photoIndex, i => { state.outputs.photoIndex = i; renderOutputs(); }); renderVariationTabs(dom.videoTabs, state.outputs.video || [], videoIndex, i => { state.outputs.videoIndex = i; renderOutputs(); }); }
+function generatePrompts(){ const base = buildAugmentedData(collectForm()); const variants = [base, variationClone(base, 1), variationClone(base, 2)]; state.outputs.photo = variants.map((v,i) => buildPhotoPrompt(v,i)); state.outputs.video = variants.map((v,i) => buildVideoPrompt(v,i)); state.outputs.notes = [state.identityLock && isCharacterEnabled() ? "Base hero variation with stable identity anchors." : "Base hero variation.",state.identityLock && isCharacterEnabled() ? "Variation 2 keeps identity anchors but changes styling, transport feel, camera, lighting, and scene mood." : "Variation 2 shifts transport feel, styling, camera, lighting, and scene mood.",state.identityLock && isCharacterEnabled() ? "Variation 3 keeps identity anchors but pushes a bigger change in transport fantasy, environment, mood, and visual direction." : "Variation 3 pushes a stronger change in transport fantasy, environment, mood, and visual direction."]; state.outputs.photoIndex = 0; state.outputs.videoIndex = 0; renderOutputs(); setStatus("Generated photo and video prompts."); }
+function fallbackCopyText(text){ try{ const ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "-9999px"; ta.style.left = "-9999px"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); const ok = document.execCommand("copy"); document.body.removeChild(ta); return ok; }catch{ return false; } }
+function copyText(text){ const value = String(text || ""); if(!value){ setStatus("Nothing to copy."); return; } if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(value).then(() => setStatus("Copied.")).catch(() => { const ok = fallbackCopyText(value); setStatus(ok ? "Copied." : "Copy failed."); }); }else{ const ok = fallbackCopyText(value); setStatus(ok ? "Copied." : "Copy failed."); } }
+function currentAllText(){ const p = state.outputs.photo[state.outputs.photoIndex] || ""; const v = state.outputs.video[state.outputs.videoIndex] || ""; return `PHOTO PROMPT\n\n${p}\n\nVIDEO PROMPT\n\n${v}`; }
+function downloadText(){ const text = currentAllText(); const blob = new Blob([text], {type:"text/plain;charset=utf-8"}); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = "luxury-surreal-prompts.txt"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); setStatus("TXT downloaded."); }
+function saveCurrentHistory(){ const entry = {id: Date.now(),conceptId: state.currentId,savedAt: new Date().toLocaleString(),form: collectForm(),customTexts: collectCustomTexts(),outputs: JSON.parse(JSON.stringify(state.outputs))}; state.history.unshift(entry); state.history = state.history.slice(0,18); saveHistory(); renderHistory(); setStatus("Saved to history."); }
+function loadHistoryEntry(entry){ state.currentId = entry.conceptId; bindConceptOptions(); Object.entries(entry.form || {}).forEach(([k,v]) => setValue(k,v,true)); fieldKeys.forEach(k => setCustomText(k, (entry.customTexts || {})[k] || "")); state.outputs = entry.outputs || {photo:[],video:[],photoIndex:0,videoIndex:0,notes:[]}; renderConceptGrid(); renderPresetRow(); updateHero(); syncCharacterPanels(); renderTypographyEffects(); renderOutputs(); setStatus("History entry loaded."); }
+function renderHistory(){ dom.historyList.innerHTML = ""; if(!state.history.length){ const div = document.createElement("div"); div.className = "helper"; div.textContent = "No history saved yet."; dom.historyList.appendChild(div); return; } state.history.forEach(item => { const btn = document.createElement("button"); btn.type = "button"; btn.className = "history-item"; btn.innerHTML = `<strong>${(item.form?.brand || "Untitled")} · ${item.savedAt}</strong><span>${(item.form?.subject || "No subject")}</span>`; btn.addEventListener("click", () => loadHistoryEntry(item)); dom.historyList.appendChild(btn); }); }
+function attachEvents(){ document.querySelectorAll("[data-jump]").forEach(btn => { btn.addEventListener("click", () => { const target = document.querySelector(btn.dataset.jump); if(target) target.scrollIntoView({behavior:"smooth", block:"start"}); }); }); $("scrollTopBtn").addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"})); $("toggleHistoryBtn").addEventListener("click", () => dom.historySection.classList.toggle("hidden")); $("clearHistoryBtn").addEventListener("click", () => { state.history = []; saveHistory(); renderHistory(); setStatus("History cleared."); }); $("loadBaseBtn").addEventListener("click", () => { if(state.currentId === "none-concept"){ bindConceptOptions(); renderPresetRow(); updateHero(); setStatus("Free build mode stays on."); return; } loadBaseDefaults(); setStatus("Base defaults loaded."); }); $("clearBtn").addEventListener("click", clearCurrentTab); $("randomizeBtn").addEventListener("click", randomizeAll); $("generateBtn").addEventListener("click", generatePrompts); $("generateBottomBtn").addEventListener("click", generatePrompts); $("copyAllBtn").addEventListener("click", () => copyText(currentAllText())); $("copyPhotoBtn").addEventListener("click", () => copyText(state.outputs.photo[state.outputs.photoIndex] || "")); $("copyVideoBtn").addEventListener("click", () => copyText(state.outputs.video[state.outputs.videoIndex] || "")); $("downloadBtn").addEventListener("click", downloadText); $("upscaleBtn").addEventListener("click", upscaleCurrentOutputs); $("saveBtn").addEventListener("click", saveCurrentHistory); dom.characterModeSwitch.addEventListener("click", () => { state.characterMode = !state.characterMode; if(state.characterMode && !getValue("gender")) setValue("gender", "women"); syncCharacterPanels(); setStatus(state.characterMode ? "Character mode on." : "Character mode off."); }); dom.identityLockSwitch.addEventListener("click", () => { state.identityLock = !state.identityLock; syncCharacterPanels(); setStatus(state.identityLock ? "Identity anchors locked." : "Identity anchors unlocked."); }); fields.gender.addEventListener("change", syncCharacterPanels); document.querySelectorAll(".lock-btn").forEach(btn => { btn.addEventListener("click", () => { const key = btn.dataset.lock; state.locks[key] = !state.locks[key]; saveLocks(); setLockVisual(key); setStatus(`${key} ${state.locks[key] ? "locked" : "unlocked"}.`); }); }); document.querySelectorAll(".rand-btn").forEach(btn => { btn.addEventListener("click", () => { const key = btn.dataset.randField; randomizeField(key); setStatus(`${key} randomized.`); }); }); }
+function init(){ applyGlobalSelects(); bindConceptOptions(); renderConceptGrid(); renderPresetRow(); updateHero(); loadBaseDefaults(); setAllLockVisuals(); injectCustomTextControls(); renderTypographyEffects(); renderHistory(); syncCharacterPanels(); renderOutputs(); attachEvents(); }
+init();
+</script>
+</body>
+</html>
