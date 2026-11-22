@@ -345,6 +345,30 @@ footer{padding:6px 10px 20px;color:#c9d3ea;text-align:center;font-size:.82rem}
   100%{transform:translateX(100%);}
 }
 
+/* ===== LIGHT + SIMPLE PASS (2026-11-21, Glam's word: too dark, too overwhelming) =====
+   Overrides only — full audit/redesign handed to Claude. */
+:root{--text:#1c2440;--muted:#4a5578;--white:#141b31;--gold-soft:#8a6d1f;--shadow:0 14px 34px rgba(28,36,64,.14);--shadow2:0 8px 22px rgba(28,36,64,.12)}
+body{background:linear-gradient(180deg,#fdf8ee 0%,#f4f0ff 45%,#eef3ff 100%);color:#1c2440}
+body::before,body::after,.floating-blur,.orbital-stars{display:none !important}
+.panel,.card,.title-panel,.topbar,.character-wrap,.gender-card{background:#ffffff !important;border-color:rgba(138,109,31,.35) !important;backdrop-filter:none}
+.title-panel h1{color:#141b31;text-shadow:none}
+.group-title{color:#8a6d1f}
+.helper,.effect-help,.variation-note,.empty{color:#4a5578}
+.ghost,.pill,.tiny,.tab-btn,.lock-btn,.rand-btn,.jump-btn,.preset-btn,.custom-toggle-btn,.effect-chip,.concept-card,.history-item{background:#f6f3ea !important;color:#1c2440 !important;border-color:rgba(138,109,31,.35) !important}
+.concept-card strong,label{color:#141b31}
+.concept-card small{color:#4a5578}
+.concept-card.active,.concept-card:hover,.preset-btn.active-preset,.tab-btn.active,.effect-chip.active,.custom-toggle-btn.active-custom{background:#e8eeff !important;border-color:#1d4ed8 !important;box-shadow:0 8px 18px rgba(28,36,64,.14)}
+input,select,textarea{background:#ffffff !important;color:#141b31 !important;border-color:rgba(28,36,64,.28) !important}
+select option{background:#ffffff;color:#141b31}
+.outbox{background:#fffdf6 !important;color:#1c2440 !important;border-color:rgba(138,109,31,.35) !important}
+.variation-note{background:#f6f3ea !important}
+.switch{background:#d9deeb}
+.status{color:#8a6d1f}
+footer{color:#4a5578}
+.start-here{max-width:1100px;margin:14px auto 0;padding:16px 20px;background:#1d4ed8;color:#fff;border-radius:18px;text-align:center;box-shadow:0 12px 26px rgba(29,78,216,.28)}
+.start-here strong{display:block;font-size:1.06rem;margin-bottom:6px}
+.start-here span{font-size:.95rem;line-height:1.55}
+.start-here b{background:#d4af37;color:#141b31;border-radius:999px;padding:1px 9px;margin:0 2px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -374,6 +398,11 @@ footer{padding:6px 10px 20px;color:#c9d3ea;text-align:center;font-size:.82rem}
   <section class="panel title-panel">
     <h1>The Scroll Stopping Surreal Ad Generator</h1>
   </section>
+
+  <div class="start-here">
+    <strong>Start here — it's just 3 steps</strong>
+    <span><b>1</b> Pick a concept below &nbsp;→&nbsp; <b>2</b> Hit <b>Randomize</b> up top (or tweak only the fields you care about — everything else is optional) &nbsp;→&nbsp; <b>3</b> Hit <b>Generate</b> and copy your prompts from the Output Studio at the bottom.</span>
+  </div>
 
   <section class="panel topbar">
     <div class="topbar-actions">
